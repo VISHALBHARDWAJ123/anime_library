@@ -155,6 +155,38 @@ mixin _$AnimeCharactersListController on AnimeCharacterListController, Store {
     });
   }
 
+  late final _$searchedListAtom =
+      Atom(name: 'AnimeCharacterListController.searchedList', context: context);
+
+  @override
+  ObservableList<CharacterItemModel> get searchedList {
+    _$searchedListAtom.reportRead();
+    return super.searchedList;
+  }
+
+  @override
+  set searchedList(ObservableList<CharacterItemModel> value) {
+    _$searchedListAtom.reportWrite(value, super.searchedList, () {
+      super.searchedList = value;
+    });
+  }
+
+  late final _$searchLoadingAtom = Atom(
+      name: 'AnimeCharacterListController.searchLoading', context: context);
+
+  @override
+  bool get searchLoading {
+    _$searchLoadingAtom.reportRead();
+    return super.searchLoading;
+  }
+
+  @override
+  set searchLoading(bool value) {
+    _$searchLoadingAtom.reportWrite(value, super.searchLoading, () {
+      super.searchLoading = value;
+    });
+  }
+
   late final _$getCharactersAsyncAction = AsyncAction(
       'AnimeCharacterListController.getCharacters',
       context: context);
@@ -196,7 +228,9 @@ error: ${error},
 errorMessage: ${errorMessage},
 stopLoading: ${stopLoading},
 characterList: ${characterList},
-initialCharacterModel: ${initialCharacterModel}
+initialCharacterModel: ${initialCharacterModel},
+searchedList: ${searchedList},
+searchLoading: ${searchLoading}
     ''';
   }
 }

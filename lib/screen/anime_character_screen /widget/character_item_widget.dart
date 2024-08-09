@@ -1,4 +1,4 @@
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 class AnimeCharacterItemWidget extends StatefulWidget {
   final CharacterItemModel itemModel;

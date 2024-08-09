@@ -1,12 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:mobx_examle/main.dart';
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 import 'dart:io';
-import 'dart:ui' as ui;
 import 'package:image/image.dart' as img;
-import 'package:flutter_svg/flutter_svg.dart';
-
-import 'colors.dart';
 
 Future<String> returnSvgString({required String imageUrl}) async {
   final response = await get(Uri.parse(imageUrl));
@@ -34,7 +28,7 @@ Future<File> returnPngFile({required Uint8List imageBytes, required String image
   return await file.writeAsBytes(pngBytes);
 }
 
-Future<Color> returnDominantColor({required String imageUrl}) async {
+Future<Color> returnDominantColor({required String imageUrl, required VoidCallback callback}) async {
   final response = await HttpClient().getUrl(Uri.parse(imageUrl));
   final responseBody = await response.close();
   final imageBytes = await consolidateHttpClientResponseBytes(responseBody);
@@ -53,7 +47,7 @@ Future<Color> returnDominantColor({required String imageUrl}) async {
     FileImage(file),
   );
 
-  print(paletteGenerator.dominantColor!.color.toString());
+  callback();
   return paletteGenerator.dominantColor != null ? paletteGenerator.dominantColor!.color : Colors.white;
 }
 
@@ -153,6 +147,10 @@ void goToScreen({required String routeName, String? data = '', required BuildCon
   context.push(
     routeName + (data ?? ''),
   );
+}
+
+void goBack({required BuildContext context}) {
+  context.pop();
 }
 
 String convertToHtml({
@@ -308,3 +306,29 @@ String getFullDetails(String input) {
 
   return html.toString();
 }
+
+const popularAnimeCharacters = [
+  "Naruto Uzumaki", // Naruto
+  "Sasuke Uchiha", // Naruto
+  "Goku", // Dragon Ball Z
+  "Vegeta", // Dragon Ball Z
+  "Luffy", // One Piece
+  "Zoro", // One Piece
+  "Ichigo Kurosaki", // Bleach
+  "Rukia Kuchiki", // Bleach
+  "Edward Elric", // Fullmetal Alchemist
+  "Alphonse Elric", // Fullmetal Alchemist
+  "Eren Yeager", // Attack on Titan
+  "Mikasa Ackerman", // Attack on Titan
+  "Levi Ackerman", // Attack on Titan
+  "Saitama", // One Punch Man
+  "Genos", // One Punch Man
+  "Light Yagami", // Death Note
+
+  "Tanjiro Kamado", // Demon Slayer
+  "Nezuko Kamado", // Demon Slayer
+  "Sakura Haruno", // Naruto
+  "Itachi Uchiha", // Naruto
+  "Kakashi Hatake", // Naruto
+  "Hinata Hyuga", // Naruto
+];

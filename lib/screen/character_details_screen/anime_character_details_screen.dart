@@ -1,9 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:mobx_examle/screen/character_details_screen/widget/character_anime_widget.dart';
-import 'package:mobx_examle/screen/character_details_screen/widget/voice_actor_widget.dart';
-import 'package:mobx_examle/utils/app_export.dart';
-import 'package:readmore/readmore.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 class CharacterDetailsScreens extends StatefulWidget {
   const CharacterDetailsScreens({super.key, required this.image, required this.characterId});
@@ -18,10 +13,18 @@ class CharacterDetailsScreens extends StatefulWidget {
 class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
   final controller = CharacterDetailController();
 
+  late Future<Color> _returnColor;
+
   @override
   void initState() {
     // TODO: implement initState
     controller.getCharacterDetails(characterId: widget.characterId);
+    _returnColor = returnDominantColor(
+      imageUrl: widget.image,
+      callback: () async {
+        await controller.getCharacterDetails(characterId: widget.characterId);
+      },
+    );
     super.initState();
   }
 
@@ -31,9 +34,7 @@ class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
       return Scaffold(
         // backgroundColor: controller.backgroundColor,
         body: FutureBuilder<Color>(
-            future: returnDominantColor(
-              imageUrl: widget.image,
-            ),
+            future: _returnColor,
             builder: (context, snapshot) => snapshot.hasData
                 ? Container(
                     color: (snapshot.data ?? Colors.blue).withOpacity(.3),
@@ -100,6 +101,8 @@ class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     verticalSpace(spaceValue: 5),
                                     HtmlWidget(
@@ -135,6 +138,8 @@ class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
                                     SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: List.generate(
                                           controller.characterData.voices!.length,
                                           (index) => SizedBox(
@@ -172,7 +177,33 @@ class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
                                           ),
                                         ),
                                       ),
-                                    )
+                                    ),
+                                    verticalSpace(spaceValue: 1),
+                                    const HtmlWidget(
+                                      '''<h2>Manga Appearance</h2>''',
+                                      buildAsync: true,
+                                    ),
+                                    verticalSpace(spaceValue: .5),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: List.generate(
+                                            controller.characterData.manga!.length,
+                                            (index) => SizedBox(
+                                              width: Adaptive.w(45),
+                                              height: Adaptive.w(52),
+                                              child: AnimeAppearanceWidget(
+                                                itemModel: AnimeElement(role: controller.characterData.manga![index].role, anime: controller.characterData.manga![index].manga),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -195,6 +226,7 @@ class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
   void setTitleBarColor() async {
     final color = await returnDominantColor(
       imageUrl: '',
+      callback: () {},
     );
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: color.withOpacity(.7), // Status bar color

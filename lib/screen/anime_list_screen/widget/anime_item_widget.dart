@@ -1,4 +1,4 @@
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 class AnimeItemWidget extends StatefulWidget {
   final AnimeListItemModel itemModel;
@@ -24,14 +24,21 @@ class _AnimeItemWidgetState extends State<AnimeItemWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Stack(
-          children: [
-            _buildParallaxBackground(context),
-            _buildGradient(),
-            _buildTitleAndSubtitle(),
-          ],
+      child: InkWell(
+        onTap: () => goToScreen(
+          routeName: animeDetailsPageRoute,
+          data: '?image=${widget.itemModel.images!['jpg']!.imageUrl}&animeId=${widget.itemModel.malId}',
+          context: context,
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Stack(
+            children: [
+              _buildParallaxBackground(context),
+              _buildGradient(),
+              _buildTitleAndSubtitle(),
+            ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 final scaffoldBackgroundColor = '#f9f9f9'.toColor();
 final primaryColor = '#e95383'.toColor();

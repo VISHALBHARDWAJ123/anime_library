@@ -1,7 +1,7 @@
 import 'package:anime_library/utils/app_export.dart';
 
-class ParallaxFlowDelegate extends FlowDelegate {
-  ParallaxFlowDelegate({
+class ParallaxHorizontalFlowDelegate extends FlowDelegate {
+  ParallaxHorizontalFlowDelegate({
     required this.scrollable,
     required this.listItemContext,
     required this.backgroundImageKey,
@@ -27,12 +27,12 @@ class ParallaxFlowDelegate extends FlowDelegate {
     final listItemOffset = listItemBox.localToGlobal(listItemBox.size.centerLeft(Offset.zero), ancestor: scrollableBox);
     final viewportDimension = scrollable.position.viewportDimension;
     final scrollFraction = (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
-    final verticalAlignment = Alignment(0.0, scrollFraction * 2 - 1);
+    final horizontalAlignment = Alignment(scrollFraction * 2 - 1, 0.0);
     // Convert the background alignment into a pixel offset for
     // painting purposes.
     final backgroundSize = (backgroundImageKey.currentContext!.findRenderObject() as RenderBox).size;
     final listItemSize = context.size;
-    final childRect = verticalAlignment.inscribe(backgroundSize, Offset.zero & listItemSize);
+    final childRect = horizontalAlignment.inscribe(backgroundSize, Offset.zero & listItemSize);
     // Paint the background.
     context.paintChild(
       0,
@@ -41,7 +41,7 @@ class ParallaxFlowDelegate extends FlowDelegate {
   }
 
   @override
-  bool shouldRepaint(covariant ParallaxFlowDelegate oldDelegate) {
+  bool shouldRepaint(covariant ParallaxHorizontalFlowDelegate oldDelegate) {
     // TODO: We'll add more to this later.
     return scrollable != oldDelegate.scrollable || listItemContext != oldDelegate.listItemContext || backgroundImageKey != oldDelegate.backgroundImageKey;
   }

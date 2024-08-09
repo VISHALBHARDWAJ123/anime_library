@@ -1,4 +1,5 @@
 const splashPageRoute = '/';
+const animeListPageRoute = '/animeListScreen';
 const homePageRoute = '/Home';
 const newsPageRoute = '/animeNews';
 const animeDetailsPageRoute = '/animeDetails';

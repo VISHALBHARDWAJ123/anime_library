@@ -1,5 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 class SliderMenuItem extends StatelessWidget {
   final String title;

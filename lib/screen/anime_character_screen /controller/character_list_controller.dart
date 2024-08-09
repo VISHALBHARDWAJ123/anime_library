@@ -1,7 +1,5 @@
-import 'dart:ffi';
-
 import 'package:mobx/mobx.dart';
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 part 'character_list_controller.g.dart';
 
@@ -16,6 +14,7 @@ abstract class AnimeCharacterListController with Store {
   Pagination paginationData = Pagination();
   @observable
   bool loading = false;
+
   @observable
   bool paging = false;
   @observable
@@ -28,6 +27,10 @@ abstract class AnimeCharacterListController with Store {
   ObservableList<CharacterItemModel> characterList = ObservableList<CharacterItemModel>();
   @observable
   CharacterListModel initialCharacterModel = CharacterListModel();
+  @observable
+  ObservableList<CharacterItemModel> searchedList = ObservableList<CharacterItemModel>();
+  @observable
+  bool searchLoading = false;
 
   @action
   Future<void> getCharacters({bool? refresh = true, int? limit = 24}) async {
@@ -72,5 +75,21 @@ abstract class AnimeCharacterListController with Store {
   }
 
   @action
-  Future<void> getSearchedCharacters({required String query, int? limit = 24}) async {}
+  Future<void> getSearchedCharacters({required String query, int? limit = 24}) async {
+    searchLoading = true;
+    searchedList.clear();
+    try {
+      await _apiClassInstance.getCharactersList(currentPage: 1, limit: limit, query: query).then((data) {
+        CharacterListModel initData = data;
+
+        searchedList.addAll(initData.data ?? []);
+        if (kDebugMode) {
+          print(searchedList.length);
+        }
+      });
+    } catch (e, stack) {
+      searchLoading = false;
+    }
+    searchLoading = false;
+  }
 }

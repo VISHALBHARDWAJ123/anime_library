@@ -1,9 +1,9 @@
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 import 'package:mobx/mobx.dart';
 
 part 'main_screen_controller.g.dart';
 
-class HomeScreenController = MainScreenController with _$HomeScreenController;
+class AnimeListController = MainScreenController with _$AnimeListController;
 
 abstract class MainScreenController with Store {
   final _apiClassInstance = ApiNetworkClass();

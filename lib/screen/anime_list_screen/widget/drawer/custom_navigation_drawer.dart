@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mobx_examle/screen/main_screen/widget/drawer/widget/menu_item.dart';
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 class CustomNavigationDrawer extends StatelessWidget {
   const CustomNavigationDrawer({super.key});

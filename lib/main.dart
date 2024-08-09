@@ -13,11 +13,12 @@ final _router = GoRouter(
   },
   routes: [
     AppRoutes.splashRoute,
-    AppRoutes.homeRoute,
+    AppRoutes.animeListScreenRoute,
     AppRoutes.newsRoute,
     AppRoutes.animeCharactersRoute,
     AppRoutes.upcomingSeasonsRoute,
     AppRoutes.characterDetailsRoute,
+    AppRoutes.animeDetailsRoute,
   ],
 );
 
@@ -36,15 +37,6 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.prompt().fontFamily,
         ),
         routerConfig: _router,
-        /*  home: Navigator(
-          pages: const [
-            MaterialPage(
-              key: ValueKey(homePageRoute),
-              child: HomeScreen(),
-            ),
-          ],
-          onPopPage: (route, result) => route.didPop(result),
-        ),*/
       );
     });
   }

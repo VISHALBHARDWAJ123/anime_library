@@ -1,14 +1,14 @@
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class AmineListScreen extends StatefulWidget {
+  const AmineListScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AmineListScreen> createState() => _AmineListScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final controller = HomeScreenController();
+class _AmineListScreenState extends State<AmineListScreen> {
+  final controller = AnimeListController();
 
   final _scrollController = ScrollController();
   final double _boundaryOffset = 1.0;

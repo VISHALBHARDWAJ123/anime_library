@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 part 'character_details_controller.g.dart';
 

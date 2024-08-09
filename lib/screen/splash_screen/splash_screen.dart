@@ -1,5 +1,4 @@
-import 'package:mobx_examle/utils/app_export.dart';
-import 'package:mobx_examle/utils/extra.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     Future.delayed(const Duration(seconds: 3)).then(
-      (value) => context.go(homePageRoute),
+      (value) => context.go(animeListPageRoute),
     );
     super.initState();
   }

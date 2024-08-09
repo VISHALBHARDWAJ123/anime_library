@@ -100,7 +100,7 @@ class Jpg {
   final String? imageUrl;
 
   Jpg({
-    this.imageUrl,
+    this.imageUrl = '',
   });
 
   factory Jpg.fromRawJson(String str) => Jpg.fromJson(json.decode(str));
@@ -108,7 +108,7 @@ class Jpg {
   String toRawJson() => json.encode(toJson());
 
   factory Jpg.fromJson(Map<String, dynamic> json) => Jpg(
-        imageUrl: json["image_url"],
+        imageUrl: json["image_url"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -121,8 +121,8 @@ class Webp {
   final String? smallImageUrl;
 
   Webp({
-    this.imageUrl,
-    this.smallImageUrl,
+    this.imageUrl = '',
+    this.smallImageUrl = '',
   });
 
   factory Webp.fromRawJson(String str) => Webp.fromJson(json.decode(str));
@@ -130,8 +130,8 @@ class Webp {
   String toRawJson() => json.encode(toJson());
 
   factory Webp.fromJson(Map<String, dynamic> json) => Webp(
-        imageUrl: json["image_url"],
-        smallImageUrl: json["small_image_url"],
+        imageUrl: json["image_url"] ?? '',
+        smallImageUrl: json["small_image_url"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

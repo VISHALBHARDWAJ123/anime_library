@@ -1,4 +1,4 @@
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
 class AnimeCharactersScreen extends StatefulWidget {
   const AnimeCharactersScreen({super.key});
@@ -38,11 +38,28 @@ class _AnimeCharactersScreenState extends State<AnimeCharactersScreen> {
             toolbarHeight: Adaptive.h(7),
             pinned: true,
             floating: false,
-            leading: Image.asset(
-              'assets/mylogo.png',
-              height: Adaptive.h(7),
+            leading: InkWell(
+              onTap: () => goBack(context: context),
+              child: Image.asset(
+                'assets/mylogo.png',
+                height: Adaptive.h(7),
+              ),
             ),
             title: const AutoSizeText('Characters Screen'),
+            actions: [
+              InkWell(
+                onTap: () async {
+                  await showSearch<String>(
+                    context: context,
+                    delegate: CharacterSearchDelegate(),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Icon(Icons.search),
+                ),
+              )
+            ],
           ),
           SliverToBoxAdapter(
             child: CustomMaterialIndicator(

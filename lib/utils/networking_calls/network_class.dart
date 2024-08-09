@@ -1,29 +1,11 @@
-import 'package:mobx_examle/utils/app_export.dart';
-import 'package:mobx_examle/utils/constants.dart';
+import 'package:anime_library/utils/app_export.dart';
+import 'package:anime_library/utils/models/anime_details_model.dart';
 
 class ApiNetworkClass extends ApiRepository {
   @override
-  Future getCharacterAnime() {
-    // TODO: implement getCharacterAnime
-    throw UnimplementedError();
-  }
-
-  @override
-  Future getCharacterVoiceActors() {
-    // TODO: implement getCharacterVoiceActors
-    throw UnimplementedError();
-  }
-
-  @override
-  Future getAnimeInfo() {
-    // TODO: implement getAnimeInfo
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<CharacterListModel> getCharactersList({required int currentPage, int? limit = 10}) async {
+  Future<CharacterListModel> getCharactersList({required int currentPage, int? limit = 10, String? query = ''}) async {
     try {
-      final data = await HttpRequest.getRequest(endpointWithValues: '${CHARACTER_LIST_ENDPOINT}page=$currentPage&limit=$limit');
+      final data = await HttpRequest.getRequest(endpointWithValues: '${CHARACTER_LIST_ENDPOINT}page=$currentPage&limit=$limit&q=$query');
       return CharacterListModel.fromJson(data);
     } catch (e, stack) {
       print(e.toString());
@@ -34,18 +16,12 @@ class ApiNetworkClass extends ApiRepository {
   @override
   Future<AnimeListModel> getAnimeList({required int currentPage, int? limit = 10}) async {
     try {
-      final data = await HttpRequest.getRequest(endpointWithValues: '${ANIME_LIST_ENDPOINT}page=$currentPage&limit=$limit');
+      final data = await HttpRequest.getRequest(endpointWithValues: '$ANIME_LIST_ENDPOINT?page=$currentPage&limit=$limit');
       return AnimeListModel.fromJson(data);
     } catch (e, stack) {
       print(e.toString());
       return AnimeListModel();
     }
-  }
-
-  @override
-  Future getUpcomingAnimeSeasons() {
-    // TODO: implement getUpcomingAnimeSeasons
-    throw UnimplementedError();
   }
 
   @override
@@ -58,5 +34,64 @@ class ApiNetworkClass extends ApiRepository {
       print(e.toString());
       return CharacterData();
     }
+  }
+
+  @override
+  Future<AnimeDetailsModel> getAnimeInfo({required int animeId}) async {
+    try {
+      final data = await HttpRequest.getRequest(endpointWithValues: '$ANIME_LIST_ENDPOINT/$animeId/full');
+
+      return AnimeDetailsModel.fromJson(data);
+    } catch (e, stack) {
+      return AnimeDetailsModel();
+    }
+  }
+
+  @override
+  Future getRecommendedAnime() {
+    // TODO: implement getRecommendedAnime
+    throw UnimplementedError();
+  }
+
+  @override
+  Future getRecommendedManga() {
+    // TODO: implement getRecommendedManga
+    throw UnimplementedError();
+  }
+
+  @override
+  Future getTopAnime() {
+    // TODO: implement getTopAnime
+    throw UnimplementedError();
+  }
+
+  @override
+  Future getTopCharacters() {
+    // TODO: implement getTopCharacters
+    throw UnimplementedError();
+  }
+
+  @override
+  Future getTopManga() {
+    // TODO: implement getTopManga
+    throw UnimplementedError();
+  }
+
+  @override
+  Future getUpcomingAnimeSeasons() {
+    // TODO: implement getUpcomingAnimeSeasons
+    throw UnimplementedError();
+  }
+
+  @override
+  Future getCharacterAnime() {
+    // TODO: implement getCharacterAnime
+    throw UnimplementedError();
+  }
+
+  @override
+  Future getCharacterVoiceActors() {
+    // TODO: implement getCharacterVoiceActors
+    throw UnimplementedError();
   }
 }

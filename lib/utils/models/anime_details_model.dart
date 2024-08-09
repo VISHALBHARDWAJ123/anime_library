@@ -1,30 +1,26 @@
-import 'package:mobx_examle/utils/app_export.dart';
+import 'package:anime_library/utils/app_export.dart';
 
-class AnimeListModel {
-  final Pagination? pagination;
-  final List<AnimeListItemModel>? data;
+class AnimeDetailsModel {
+  final Data? data;
 
-  AnimeListModel({
-    this.pagination,
+  AnimeDetailsModel({
     this.data,
   });
 
-  factory AnimeListModel.fromRawJson(String str) => AnimeListModel.fromJson(json.decode(str));
+  factory AnimeDetailsModel.fromRawJson(String str) => AnimeDetailsModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory AnimeListModel.fromJson(Map<String, dynamic> json) => AnimeListModel(
-        pagination: json["pagination"] == null ? null : Pagination.fromJson(json["pagination"]),
-        data: json["data"] == null ? [] : List<AnimeListItemModel>.from(json["data"]!.map((x) => AnimeListItemModel.fromJson(x))),
+  factory AnimeDetailsModel.fromJson(Map<String, dynamic> json) => AnimeDetailsModel(
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "pagination": pagination?.toJson(),
-        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "data": data?.toJson(),
       };
 }
 
-class AnimeListItemModel {
+class Data {
   final int? malId;
   final String? url;
   final Map<String, ImageModel>? images;
@@ -34,7 +30,7 @@ class AnimeListItemModel {
   final String? title;
   final String? titleEnglish;
   final String? titleJapanese;
-  final List<String>? titleSynonyms;
+  final List<dynamic>? titleSynonyms;
   final String? type;
   final String? source;
   final int? episodes;
@@ -58,11 +54,15 @@ class AnimeListItemModel {
   final List<Demographic>? licensors;
   final List<Demographic>? studios;
   final List<Demographic>? genres;
-  final List<dynamic>? explicitGenres;
+  final List<Demographic>? explicitGenres;
   final List<Demographic>? themes;
   final List<Demographic>? demographics;
+  final List<Relation>? relations;
+  final Theme? theme;
+  final List<External>? dataExternal;
+  final List<External>? streaming;
 
-  AnimeListItemModel({
+  Data({
     this.malId,
     this.url,
     this.images,
@@ -99,13 +99,17 @@ class AnimeListItemModel {
     this.explicitGenres,
     this.themes,
     this.demographics,
+    this.relations,
+    this.theme,
+    this.dataExternal,
+    this.streaming,
   });
 
-  factory AnimeListItemModel.fromRawJson(String str) => AnimeListItemModel.fromJson(json.decode(str));
+  factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory AnimeListItemModel.fromJson(Map<String, dynamic> json) => AnimeListItemModel(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         malId: json["mal_id"],
         url: json["url"],
         images: Map.from(json["images"]!).map((k, v) => MapEntry<String, ImageModel>(k, ImageModel.fromJson(v))),
@@ -115,7 +119,7 @@ class AnimeListItemModel {
         title: json["title"],
         titleEnglish: json["title_english"],
         titleJapanese: json["title_japanese"],
-        titleSynonyms: json["title_synonyms"] == null ? [] : List<String>.from(json["title_synonyms"]!.map((x) => x)),
+        titleSynonyms: json["title_synonyms"] == null ? [] : List<dynamic>.from(json["title_synonyms"]!.map((x) => x)),
         type: json["type"],
         source: json["source"],
         episodes: json["episodes"],
@@ -139,9 +143,13 @@ class AnimeListItemModel {
         licensors: json["licensors"] == null ? [] : List<Demographic>.from(json["licensors"]!.map((x) => Demographic.fromJson(x))),
         studios: json["studios"] == null ? [] : List<Demographic>.from(json["studios"]!.map((x) => Demographic.fromJson(x))),
         genres: json["genres"] == null ? [] : List<Demographic>.from(json["genres"]!.map((x) => Demographic.fromJson(x))),
-        explicitGenres: json["explicit_genres"] == null ? [] : List<dynamic>.from(json["explicit_genres"]!.map((x) => x)),
+        explicitGenres: json["explicit_genres"] == null ? [] : List<Demographic>.from(json["explicit_genres"]!.map((x) => Demographic.fromJson(x))),
         themes: json["themes"] == null ? [] : List<Demographic>.from(json["themes"]!.map((x) => Demographic.fromJson(x))),
         demographics: json["demographics"] == null ? [] : List<Demographic>.from(json["demographics"]!.map((x) => Demographic.fromJson(x))),
+        relations: json["relations"] == null ? [] : List<Relation>.from(json["relations"]!.map((x) => Relation.fromJson(x))),
+        theme: json["theme"] == null ? null : Theme.fromJson(json["theme"]),
+        dataExternal: json["external"] == null ? [] : List<External>.from(json["external"]!.map((x) => External.fromJson(x))),
+        streaming: json["streaming"] == null ? [] : List<External>.from(json["streaming"]!.map((x) => External.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -180,13 +188,17 @@ class AnimeListItemModel {
         "genres": genres == null ? [] : List<dynamic>.from(genres!.map((x) => x.toJson())),
         "explicit_genres": explicitGenres == null ? [] : List<dynamic>.from(explicitGenres!.map((x) => x)),
         "themes": themes == null ? [] : List<dynamic>.from(themes!.map((x) => x.toJson())),
-        "demographics": demographics == null ? [] : List<dynamic>.from(demographics!.map((x) => x.toJson())),
+        "demographics": demographics == null ? [] : List<dynamic>.from(demographics!.map((x) => x)),
+        "relations": relations == null ? [] : List<dynamic>.from(relations!.map((x) => x.toJson())),
+        "theme": theme?.toJson(),
+        "external": dataExternal == null ? [] : List<dynamic>.from(dataExternal!.map((x) => x.toJson())),
+        "streaming": streaming == null ? [] : List<dynamic>.from(streaming!.map((x) => x.toJson())),
       };
 }
 
 class Aired {
-  final DateTime? from;
-  final DateTime? to;
+  final String? from;
+  final String? to;
   final Prop? prop;
   final String? string;
 
@@ -202,15 +214,15 @@ class Aired {
   String toRawJson() => json.encode(toJson());
 
   factory Aired.fromJson(Map<String, dynamic> json) => Aired(
-        from: json["from"] == null ? null : DateTime.parse(json["from"]),
-        to: json["to"] == null ? null : DateTime.parse(json["to"]),
+        from: json["from"],
+        to: json["to"],
         prop: json["prop"] == null ? null : Prop.fromJson(json["prop"]),
         string: json["string"],
       );
 
   Map<String, dynamic> toJson() => {
-        "from": from?.toIso8601String(),
-        "to": to?.toIso8601String(),
+        "from": from,
+        "to": to,
         "prop": prop?.toJson(),
         "string": string,
       };
@@ -300,154 +312,74 @@ class Broadcast {
       };
 }
 
-class Demographic {
-  final int? malId;
-  final String? type;
+class External {
   final String? name;
   final String? url;
 
-  Demographic({
-    this.malId,
-    this.type,
+  External({
     this.name,
     this.url,
   });
 
-  factory Demographic.fromRawJson(String str) => Demographic.fromJson(json.decode(str));
+  factory External.fromRawJson(String str) => External.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Demographic.fromJson(Map<String, dynamic> json) => Demographic(
-        malId: json["mal_id"],
-        type: json["type"],
+  factory External.fromJson(Map<String, dynamic> json) => External(
         name: json["name"],
         url: json["url"],
       );
 
   Map<String, dynamic> toJson() => {
-        "mal_id": malId,
-        "type": type,
         "name": name,
         "url": url,
       };
 }
 
-class ImageModel {
-  final String? imageUrl;
-  final String? smallImageUrl;
-  final String? largeImageUrl;
+class Relation {
+  final String? relation;
+  final List<Demographic>? entry;
 
-  ImageModel({
-    this.imageUrl,
-    this.smallImageUrl,
-    this.largeImageUrl,
+  Relation({
+    this.relation,
+    this.entry,
   });
 
-  factory ImageModel.fromRawJson(String str) => ImageModel.fromJson(json.decode(str));
+  factory Relation.fromRawJson(String str) => Relation.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
-        imageUrl: json["image_url"],
-        smallImageUrl: json["small_image_url"],
-        largeImageUrl: json["large_image_url"],
+  factory Relation.fromJson(Map<String, dynamic> json) => Relation(
+        relation: json["relation"],
+        entry: json["entry"] == null ? [] : List<Demographic>.from(json["entry"]!.map((x) => Demographic.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "image_url": imageUrl,
-        "small_image_url": smallImageUrl,
-        "large_image_url": largeImageUrl,
+        "relation": relation,
+        "entry": entry == null ? [] : List<dynamic>.from(entry!.map((x) => x.toJson())),
       };
 }
 
-class TitleModel {
-  final String? type;
-  final String? title;
+class Theme {
+  final List<String>? openings;
+  final List<String>? endings;
 
-  TitleModel({
-    this.type,
-    this.title,
+  Theme({
+    this.openings,
+    this.endings,
   });
 
-  factory TitleModel.fromRawJson(String str) => TitleModel.fromJson(json.decode(str));
+  factory Theme.fromRawJson(String str) => Theme.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory TitleModel.fromJson(Map<String, dynamic> json) => TitleModel(
-        type: json["type"],
-        title: json["title"],
+  factory Theme.fromJson(Map<String, dynamic> json) => Theme(
+        openings: json["openings"] == null ? [] : List<String>.from(json["openings"]!.map((x) => x)),
+        endings: json["endings"] == null ? [] : List<String>.from(json["endings"]!.map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "type": type,
-        "title": title,
-      };
-}
-
-class Trailer {
-  final String? youtubeId;
-  final String? url;
-  final String? embedUrl;
-  final Images? images;
-
-  Trailer({
-    this.youtubeId,
-    this.url,
-    this.embedUrl,
-    this.images,
-  });
-
-  factory Trailer.fromRawJson(String str) => Trailer.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Trailer.fromJson(Map<String, dynamic> json) => Trailer(
-        youtubeId: json["youtube_id"],
-        url: json["url"],
-        embedUrl: json["embed_url"],
-        images: json["images"] == null ? null : Images.fromJson(json["images"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "youtube_id": youtubeId,
-        "url": url,
-        "embed_url": embedUrl,
-        "images": images?.toJson(),
-      };
-}
-
-class Images {
-  final String? imageUrl;
-  final String? smallImageUrl;
-  final String? mediumImageUrl;
-  final String? largeImageUrl;
-  final String? maximumImageUrl;
-
-  Images({
-    this.imageUrl,
-    this.smallImageUrl,
-    this.mediumImageUrl,
-    this.largeImageUrl,
-    this.maximumImageUrl,
-  });
-
-  factory Images.fromRawJson(String str) => Images.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Images.fromJson(Map<String, dynamic> json) => Images(
-        imageUrl: json["image_url"],
-        smallImageUrl: json["small_image_url"],
-        mediumImageUrl: json["medium_image_url"],
-        largeImageUrl: json["large_image_url"],
-        maximumImageUrl: json["maximum_image_url"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "image_url": imageUrl,
-        "small_image_url": smallImageUrl,
-        "medium_image_url": mediumImageUrl,
-        "large_image_url": largeImageUrl,
-        "maximum_image_url": maximumImageUrl,
+        "openings": openings == null ? [] : List<dynamic>.from(openings!.map((x) => x)),
+        "endings": endings == null ? [] : List<dynamic>.from(endings!.map((x) => x)),
       };
 }
