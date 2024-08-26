@@ -58,7 +58,7 @@ class Data {
   final List<Demographic>? themes;
   final List<Demographic>? demographics;
   final List<Relation>? relations;
-  final Theme? theme;
+  final AnimeTheme? theme;
   final List<External>? dataExternal;
   final List<External>? streaming;
 
@@ -147,7 +147,7 @@ class Data {
         themes: json["themes"] == null ? [] : List<Demographic>.from(json["themes"]!.map((x) => Demographic.fromJson(x))),
         demographics: json["demographics"] == null ? [] : List<Demographic>.from(json["demographics"]!.map((x) => Demographic.fromJson(x))),
         relations: json["relations"] == null ? [] : List<Relation>.from(json["relations"]!.map((x) => Relation.fromJson(x))),
-        theme: json["theme"] == null ? null : Theme.fromJson(json["theme"]),
+        theme: json["theme"] == null ? null : AnimeTheme.fromJson(json["theme"]),
         dataExternal: json["external"] == null ? [] : List<External>.from(json["external"]!.map((x) => External.fromJson(x))),
         streaming: json["streaming"] == null ? [] : List<External>.from(json["streaming"]!.map((x) => External.fromJson(x))),
       );
@@ -196,7 +196,7 @@ class Data {
       };
 }
 
-class Aired {
+/*class Aired {
   final String? from;
   final String? to;
   final Prop? prop;
@@ -226,9 +226,9 @@ class Aired {
         "prop": prop?.toJson(),
         "string": string,
       };
-}
+}*/
 
-class Prop {
+/*class Prop {
   final From? from;
   final From? to;
 
@@ -278,9 +278,9 @@ class From {
         "month": month,
         "year": year,
       };
-}
+}*/
 
-class Broadcast {
+/*class Broadcast {
   final String? day;
   final String? time;
   final String? timezone;
@@ -293,7 +293,8 @@ class Broadcast {
     this.string,
   });
 
-  factory Broadcast.fromRawJson(String str) => Broadcast.fromJson(json.decode(str));
+  factory Broadcast.fromRawJson(String str) =>
+      Broadcast.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -310,7 +311,7 @@ class Broadcast {
         "timezone": timezone,
         "string": string,
       };
-}
+}*/
 
 class External {
   final String? name;
@@ -360,20 +361,20 @@ class Relation {
       };
 }
 
-class Theme {
+class AnimeTheme {
   final List<String>? openings;
   final List<String>? endings;
 
-  Theme({
+  AnimeTheme({
     this.openings,
     this.endings,
   });
 
-  factory Theme.fromRawJson(String str) => Theme.fromJson(json.decode(str));
+  factory AnimeTheme.fromRawJson(String str) => AnimeTheme.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Theme.fromJson(Map<String, dynamic> json) => Theme(
+  factory AnimeTheme.fromJson(Map<String, dynamic> json) => AnimeTheme(
         openings: json["openings"] == null ? [] : List<String>.from(json["openings"]!.map((x) => x)),
         endings: json["endings"] == null ? [] : List<String>.from(json["endings"]!.map((x) => x)),
       );

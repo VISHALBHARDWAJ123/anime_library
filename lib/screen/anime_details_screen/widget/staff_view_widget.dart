@@ -1,20 +1,18 @@
 import 'package:anime_library/utils/app_export.dart';
 
-class AnimeAppearanceWidget extends StatefulWidget {
-  final AnimeElement itemModel;
-  final bool? isManga;
+class StaffViewWidget extends StatefulWidget {
+  final AnimeStaffItemModel itemModel;
 
-  const AnimeAppearanceWidget({
+  const StaffViewWidget({
     super.key,
     required this.itemModel,
-    this.isManga = false,
   });
 
   @override
-  State<AnimeAppearanceWidget> createState() => _AnimeAppearanceWidgetState();
+  State<StaffViewWidget> createState() => _StaffViewWidgetState();
 }
 
-class _AnimeAppearanceWidgetState extends State<AnimeAppearanceWidget> {
+class _StaffViewWidgetState extends State<StaffViewWidget> {
   @override
   void initState() {
     // TODO: implement initState
@@ -24,27 +22,16 @@ class _AnimeAppearanceWidgetState extends State<AnimeAppearanceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        widget.isManga == false
-            ? goToScreen(
-                routeName: animeDetailsPageRoute,
-                context: context,
-                data: '?image=${widget.itemModel.anime!.images?['jpg']?.imageUrl}&animeId=${widget.itemModel.anime?.malId}',
-              )
-            : null;
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Stack(
-            children: [
-              _buildParallaxBackground(context),
-              _buildGradient(),
-              _buildTitleAndSubtitle(),
-            ],
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Stack(
+          children: [
+            _buildParallaxBackground(context),
+            _buildGradient(),
+            _buildTitleAndSubtitle(),
+          ],
         ),
       ),
     );
@@ -61,7 +48,7 @@ class _AnimeAppearanceWidgetState extends State<AnimeAppearanceWidget> {
       ),
       children: [
         CachedNetworkImage(
-          imageUrl: widget.itemModel.anime!.images!['jpg']!.imageUrl!,
+          imageUrl: widget.itemModel.person!.images!.jpg!.imageUrl!,
           key: backgroundKey,
           fit: BoxFit.cover,
           placeholder: (
@@ -99,7 +86,7 @@ class _AnimeAppearanceWidgetState extends State<AnimeAppearanceWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AutoSizeText(
-            widget.itemModel.anime!.title!,
+            widget.itemModel.person!.name!,
             maxLines: 2,
             style: const TextStyle(
               color: Colors.white,
@@ -108,7 +95,7 @@ class _AnimeAppearanceWidgetState extends State<AnimeAppearanceWidget> {
             ),
           ),
           AutoSizeText(
-            widget.itemModel.role!,
+            widget.itemModel.positions!.join(','),
             maxLines: 2,
             style: const TextStyle(
               color: Colors.white,

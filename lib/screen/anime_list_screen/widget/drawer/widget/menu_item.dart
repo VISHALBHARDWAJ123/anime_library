@@ -6,7 +6,11 @@ class SliderMenuItem extends StatelessWidget {
   final IconData iconData;
   final VoidCallback onTap;
 
-  const SliderMenuItem({super.key, required this.title, required this.iconData, required this.onTap});
+  const SliderMenuItem(
+      {super.key,
+      required this.title,
+      required this.iconData,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {

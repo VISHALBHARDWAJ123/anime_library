@@ -6,17 +6,26 @@ class RecommendedMangaAnimeModel {
 
   RecommendedMangaAnimeModel({this.data, this.pagination});
 
-  factory RecommendedMangaAnimeModel.fromRawJson(String str) => RecommendedMangaAnimeModel.fromJson(json.decode(str));
+  factory RecommendedMangaAnimeModel.fromRawJson(String str) =>
+      RecommendedMangaAnimeModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory RecommendedMangaAnimeModel.fromJson(Map<String, dynamic> json) => RecommendedMangaAnimeModel(
-        pagination: json['pagination'] == null ? RecommendedPaginationModel() : RecommendedPaginationModel.fromJson(json['pagination']),
-        data: json["data"] == null ? [] : List<RecommendationItemModel>.from(json["data"]!.map((x) => RecommendationItemModel.fromJson(x))),
+  factory RecommendedMangaAnimeModel.fromJson(Map<String, dynamic> json) =>
+      RecommendedMangaAnimeModel(
+        pagination: json['pagination'] == null
+            ? RecommendedPaginationModel()
+            : RecommendedPaginationModel.fromJson(json['pagination']),
+        data: json["data"] == null
+            ? []
+            : List<RecommendationItemModel>.from(
+                json["data"]!.map((x) => RecommendationItemModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
@@ -35,13 +44,17 @@ class RecommendationItemModel {
     this.user,
   });
 
-  factory RecommendationItemModel.fromRawJson(String str) => RecommendationItemModel.fromJson(json.decode(str));
+  factory RecommendationItemModel.fromRawJson(String str) =>
+      RecommendationItemModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory RecommendationItemModel.fromJson(Map<String, dynamic> json) => RecommendationItemModel(
+  factory RecommendationItemModel.fromJson(Map<String, dynamic> json) =>
+      RecommendationItemModel(
         malId: json["mal_id"],
-        entry: json["entry"] == null ? [] : List<Entry>.from(json["entry"]!.map((x) => Entry.fromJson(x))),
+        entry: json["entry"] == null
+            ? []
+            : List<Entry>.from(json["entry"]!.map((x) => Entry.fromJson(x))),
         content: json["content"],
         date: json["date"],
         user: json["user"] == null ? null : User.fromJson(json["user"]),
@@ -49,7 +62,9 @@ class RecommendationItemModel {
 
   Map<String, dynamic> toJson() => {
         "mal_id": malId,
-        "entry": entry == null ? [] : List<dynamic>.from(entry!.map((x) => x.toJson())),
+        "entry": entry == null
+            ? []
+            : List<dynamic>.from(entry!.map((x) => x.toJson())),
         "content": content,
         "date": date,
         "user": user?.toJson(),
@@ -76,14 +91,16 @@ class Entry {
   factory Entry.fromJson(Map<String, dynamic> json) => Entry(
         malId: json["mal_id"],
         url: json["url"],
-        images: Map.from(json["images"]!).map((k, v) => MapEntry<String, Image>(k, Image.fromJson(v))),
+        images: Map.from(json["images"]!)
+            .map((k, v) => MapEntry<String, Image>(k, Image.fromJson(v))),
         title: json["title"],
       );
 
   Map<String, dynamic> toJson() => {
         "mal_id": malId,
         "url": url,
-        "images": Map.from(images!).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "images": Map.from(images!)
+            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
         "title": title,
       };
 }
@@ -149,11 +166,13 @@ class RecommendedPaginationModel {
     this.hasNextPage,
   });
 
-  factory RecommendedPaginationModel.fromRawJson(String str) => RecommendedPaginationModel.fromJson(json.decode(str));
+  factory RecommendedPaginationModel.fromRawJson(String str) =>
+      RecommendedPaginationModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory RecommendedPaginationModel.fromJson(Map<String, dynamic> json) => RecommendedPaginationModel(
+  factory RecommendedPaginationModel.fromJson(Map<String, dynamic> json) =>
+      RecommendedPaginationModel(
         lastVisiblePage: json["last_visible_page"],
         hasNextPage: json["has_next_page"],
       );

@@ -1,3 +1,4 @@
+import 'package:anime_library/sample_text_widget.dart';
 import 'package:anime_library/screen/anime_details_screen/anime_details_screen.dart';
 import 'package:anime_library/utils/app_export.dart';
 
@@ -70,6 +71,28 @@ class AppRoutes {
       final image = state.uri.queryParameters['image']!;
       final int animeId = int.parse(state.uri.queryParameters['animeId']!);
       return AnimeDetailsScreen(image: image, animeId: animeId);
+    },
+  );
+  static final settingRoute = GoRoute(
+    path: settingPageRoute,
+    builder: (context, state) {
+      // final image = state.uri.queryParameters['image']!;
+      // final int animeId = int.parse(state.uri.queryParameters['animeId']!);
+      return const SampleTextWidget(
+        actualText: 'This is a sample text with query in it.This is a sample text with query in it.',
+      );
+    },
+  );
+  static final browserRoute = GoRoute(
+    path: browserPageRoute,
+    builder: (context, state) {
+      final webUrl = state.uri.queryParameters['url']!;
+      final title = state.uri.queryParameters['title']!;
+
+      return BrowserScreen(
+        webUrl: webUrl,
+        title: title,
+      );
     },
   );
 }

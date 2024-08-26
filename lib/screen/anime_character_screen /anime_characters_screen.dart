@@ -22,7 +22,10 @@ class _AnimeCharactersScreenState extends State<AnimeCharactersScreen> {
   }
 
   void _scrollListener() {
-    if (!controller.stopLoading && _scrollController.position.pixels >= _scrollController.position.maxScrollExtent * _boundaryOffset && !controller.paging) {
+    if (!controller.stopLoading &&
+        _scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent * _boundaryOffset &&
+        !controller.paging) {
       controller.getNextCharacters();
     }
   }
@@ -94,14 +97,16 @@ class _AnimeCharactersScreenState extends State<AnimeCharactersScreen> {
                                   goToScreen(
                                     routeName: animeCharacterDetailsPageRoute,
                                     context: context,
-                                    data: '?image=${controller.characterList[index].images!.jpg!.imageUrl}&characterId=${controller.characterList[index].malId}',
+                                    data:
+                                        '?image=${controller.characterList[index].images!.jpg!.imageUrl}&characterId=${controller.characterList[index].malId}',
                                   );
                                 },
                                 child: AnimeCharacterItemWidget(
                                   itemModel: controller.characterList[index],
                                 ),
                               ),
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 childAspectRatio: 1 / 1.2,
                               ),

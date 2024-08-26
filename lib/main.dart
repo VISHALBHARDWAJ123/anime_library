@@ -19,6 +19,8 @@ final _router = GoRouter(
     AppRoutes.upcomingSeasonsRoute,
     AppRoutes.characterDetailsRoute,
     AppRoutes.animeDetailsRoute,
+    // AppRoutes.settingRoute,
+    AppRoutes.browserRoute,
   ],
 );
 

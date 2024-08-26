@@ -24,7 +24,9 @@ class PaginationScrollController {
   void scrollListener() async {
     if (!stopLoading) {
       // Check if we've scrolled to the desired offset and are not already loading
-      if (scrollController.offset >= scrollController.position.maxScrollExtent * boundaryOffset - 10 && !isLoading) {
+      if (scrollController.offset >=
+              scrollController.position.maxScrollExtent * boundaryOffset - 10 &&
+          !isLoading) {
         isLoading = true; // Set loading state
 
         // Use async/await to handle the loadAction future

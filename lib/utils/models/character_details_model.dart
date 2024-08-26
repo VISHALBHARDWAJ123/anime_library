@@ -7,12 +7,15 @@ class CharacterDetailsModel {
     this.data,
   });
 
-  factory CharacterDetailsModel.fromRawJson(String str) => CharacterDetailsModel.fromJson(json.decode(str));
+  factory CharacterDetailsModel.fromRawJson(String str) =>
+      CharacterDetailsModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory CharacterDetailsModel.fromJson(Map<String, dynamic> json) => CharacterDetailsModel(
-        data: json["data"] == null ? null : CharacterData.fromJson(json["data"]),
+  factory CharacterDetailsModel.fromJson(Map<String, dynamic> json) =>
+      CharacterDetailsModel(
+        data:
+            json["data"] == null ? null : CharacterData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,23 +52,34 @@ class CharacterData {
     this.fullDetails,
   });
 
-  factory CharacterData.fromRawJson(String str) => CharacterData.fromJson(json.decode(str));
+  factory CharacterData.fromRawJson(String str) =>
+      CharacterData.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory CharacterData.fromJson(Map<String, dynamic> json) => CharacterData(
         malId: json["mal_id"] ?? 0,
         url: json["url"] ?? '',
-        images: json["images"] == null ? null : DataImages.fromJson(json["images"]),
+        images:
+            json["images"] == null ? null : DataImages.fromJson(json["images"]),
         name: json["name"] ?? '',
         nameKanji: json["name_kanji"] ?? '',
-        nicknames: json["nicknames"] == null ? [] : List<dynamic>.from(json["nicknames"]!.map((x) => x)),
+        nicknames: json["nicknames"] == null
+            ? []
+            : List<dynamic>.from(json["nicknames"]!.map((x) => x)),
         favorites: json["favorites"],
         about: getBaiscDetails(json["about"] ?? '', json["name"] ?? ''),
         fullDetails: getFullDetails(json['about'] ?? ''),
-        anime: json["anime"] == null ? [] : List<AnimeElement>.from(json["anime"]!.map((x) => AnimeElement.fromJson(x))),
-        manga: json["manga"] == null ? [] : List<Manga>.from(json["manga"]!.map((x) => Manga.fromJson(x))),
-        voices: json["voices"] == null ? [] : List<Voice>.from(json["voices"]!.map((x) => Voice.fromJson(x))),
+        anime: json["anime"] == null
+            ? []
+            : List<AnimeElement>.from(
+                json["anime"]!.map((x) => AnimeElement.fromJson(x))),
+        manga: json["manga"] == null
+            ? []
+            : List<Manga>.from(json["manga"]!.map((x) => Manga.fromJson(x))),
+        voices: json["voices"] == null
+            ? []
+            : List<Voice>.from(json["voices"]!.map((x) => Voice.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,12 +88,20 @@ class CharacterData {
         "images": images?.toJson(),
         "name": name,
         "name_kanji": nameKanji,
-        "nicknames": nicknames == null ? [] : List<dynamic>.from(nicknames!.map((x) => x)),
+        "nicknames": nicknames == null
+            ? []
+            : List<dynamic>.from(nicknames!.map((x) => x)),
         "favorites": favorites,
         "about": about,
-        "anime": anime == null ? [] : List<dynamic>.from(anime!.map((x) => x.toJson())),
-        "manga": manga == null ? [] : List<dynamic>.from(manga!.map((x) => x.toJson())),
-        "voices": voices == null ? [] : List<dynamic>.from(voices!.map((x) => x.toJson())),
+        "anime": anime == null
+            ? []
+            : List<dynamic>.from(anime!.map((x) => x.toJson())),
+        "manga": manga == null
+            ? []
+            : List<dynamic>.from(manga!.map((x) => x.toJson())),
+        "voices": voices == null
+            ? []
+            : List<dynamic>.from(voices!.map((x) => x.toJson())),
       };
 }
 
@@ -92,13 +114,15 @@ class AnimeElement {
     this.anime,
   });
 
-  factory AnimeElement.fromRawJson(String str) => AnimeElement.fromJson(json.decode(str));
+  factory AnimeElement.fromRawJson(String str) =>
+      AnimeElement.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory AnimeElement.fromJson(Map<String, dynamic> json) => AnimeElement(
         role: json["role"] ?? '',
-        anime: json["anime"] == null ? null : MangaClass.fromJson(json["anime"]),
+        anime:
+            json["anime"] == null ? null : MangaClass.fromJson(json["anime"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -120,21 +144,24 @@ class MangaClass {
     this.title = '',
   });
 
-  factory MangaClass.fromRawJson(String str) => MangaClass.fromJson(json.decode(str));
+  factory MangaClass.fromRawJson(String str) =>
+      MangaClass.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory MangaClass.fromJson(Map<String, dynamic> json) => MangaClass(
         malId: json["mal_id"] ?? 0,
         url: json["url"] ?? '',
-        images: Map.from(json["images"]!).map((k, v) => MapEntry<String, CharacterImage>(k, CharacterImage.fromJson(v))),
+        images: Map.from(json["images"]!).map((k, v) =>
+            MapEntry<String, CharacterImage>(k, CharacterImage.fromJson(v))),
         title: json["title"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
         "mal_id": malId,
         "url": url,
-        "images": Map.from(images!).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "images": Map.from(images!)
+            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
         "title": title,
       };
 }
@@ -150,7 +177,8 @@ class CharacterImage {
     this.largeImageUrl = '',
   });
 
-  factory CharacterImage.fromRawJson(String str) => CharacterImage.fromJson(json.decode(str));
+  factory CharacterImage.fromRawJson(String str) =>
+      CharacterImage.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -176,7 +204,8 @@ class DataImages {
     this.webp,
   });
 
-  factory DataImages.fromRawJson(String str) => DataImages.fromJson(json.decode(str));
+  factory DataImages.fromRawJson(String str) =>
+      DataImages.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -206,7 +235,9 @@ class Manga {
 
   factory Manga.fromJson(Map<String, dynamic> json) => Manga(
         role: json["role"] ?? '',
-        manga: json["manga"] == null ? MangaClass() : MangaClass.fromJson(json["manga"]),
+        manga: json["manga"] == null
+            ? MangaClass()
+            : MangaClass.fromJson(json["manga"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -229,7 +260,8 @@ class Voice {
   String toRawJson() => json.encode(toJson());
 
   factory Voice.fromJson(Map<String, dynamic> json) => Voice(
-        person: json["person"] == null ? Person() : Person.fromJson(json["person"]),
+        person:
+            json["person"] == null ? Person() : Person.fromJson(json["person"]),
         language: json["language"] ?? '',
       );
 
@@ -259,7 +291,9 @@ class Person {
   factory Person.fromJson(Map<String, dynamic> json) => Person(
         malId: json["mal_id"],
         url: json["url"],
-        images: json["images"] == null ? null : PersonImages.fromJson(json["images"]),
+        images: json["images"] == null
+            ? null
+            : PersonImages.fromJson(json["images"]),
         name: json["name"],
       );
 
@@ -278,7 +312,8 @@ class PersonImages {
     this.jpg,
   });
 
-  factory PersonImages.fromRawJson(String str) => PersonImages.fromJson(json.decode(str));
+  factory PersonImages.fromRawJson(String str) =>
+      PersonImages.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 

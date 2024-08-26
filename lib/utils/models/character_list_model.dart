@@ -9,18 +9,27 @@ class CharacterListModel {
     this.data,
   });
 
-  factory CharacterListModel.fromRawJson(String str) => CharacterListModel.fromJson(json.decode(str));
+  factory CharacterListModel.fromRawJson(String str) =>
+      CharacterListModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory CharacterListModel.fromJson(Map<String, dynamic> json) => CharacterListModel(
-        pagination: json["pagination"] == null ? null : Pagination.fromJson(json["pagination"]),
-        data: json["data"] == null ? [] : List<CharacterItemModel>.from(json["data"]!.map((x) => CharacterItemModel.fromJson(x))),
+  factory CharacterListModel.fromJson(Map<String, dynamic> json) =>
+      CharacterListModel(
+        pagination: json["pagination"] == null
+            ? null
+            : Pagination.fromJson(json["pagination"]),
+        data: json["data"] == null
+            ? []
+            : List<CharacterItemModel>.from(
+                json["data"]!.map((x) => CharacterItemModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "pagination": pagination?.toJson(),
-        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
@@ -45,17 +54,23 @@ class CharacterItemModel {
     this.about,
   });
 
-  factory CharacterItemModel.fromRawJson(String str) => CharacterItemModel.fromJson(json.decode(str));
+  factory CharacterItemModel.fromRawJson(String str) =>
+      CharacterItemModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory CharacterItemModel.fromJson(Map<String, dynamic> json) => CharacterItemModel(
+  factory CharacterItemModel.fromJson(Map<String, dynamic> json) =>
+      CharacterItemModel(
         malId: json["mal_id"] ?? 0,
         url: json["url"] ?? '',
-        images: json["images"] == null ? CharacterImageModel() : CharacterImageModel.fromJson(json["images"]),
+        images: json["images"] == null
+            ? CharacterImageModel()
+            : CharacterImageModel.fromJson(json["images"]),
         name: json["name"] ?? '',
         nameKanji: json["name_kanji"] ?? '',
-        nicknames: json["nicknames"] == null ? [] : List<String>.from(json["nicknames"]!.map((x) => x)),
+        nicknames: json["nicknames"] == null
+            ? []
+            : List<String>.from(json["nicknames"]!.map((x) => x)),
         favorites: json["favorites"] ?? 0,
         about: json["about"] ?? '',
       );
@@ -66,7 +81,9 @@ class CharacterItemModel {
         "images": images?.toJson(),
         "name": name,
         "name_kanji": nameKanji,
-        "nicknames": nicknames == null ? [] : List<dynamic>.from(nicknames!.map((x) => x)),
+        "nicknames": nicknames == null
+            ? []
+            : List<dynamic>.from(nicknames!.map((x) => x)),
         "favorites": favorites,
         "about": about,
       };
@@ -81,11 +98,13 @@ class CharacterImageModel {
     this.webp,
   });
 
-  factory CharacterImageModel.fromRawJson(String str) => CharacterImageModel.fromJson(json.decode(str));
+  factory CharacterImageModel.fromRawJson(String str) =>
+      CharacterImageModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory CharacterImageModel.fromJson(Map<String, dynamic> json) => CharacterImageModel(
+  factory CharacterImageModel.fromJson(Map<String, dynamic> json) =>
+      CharacterImageModel(
         jpg: json["jpg"] == null ? null : Jpg.fromJson(json["jpg"]),
         webp: json["webp"] == null ? null : Webp.fromJson(json["webp"]),
       );
@@ -153,7 +172,8 @@ class Pagination {
     this.items,
   });
 
-  factory Pagination.fromRawJson(String str) => Pagination.fromJson(json.decode(str));
+  factory Pagination.fromRawJson(String str) =>
+      Pagination.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 

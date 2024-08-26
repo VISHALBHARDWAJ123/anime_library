@@ -18,18 +18,20 @@ class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
   @override
   void initState() {
     // TODO: implement initState
-    controller.getCharacterDetails(characterId: widget.characterId);
+
     _returnColor = returnDominantColor(
       imageUrl: widget.image,
       callback: () async {
-        await controller.getCharacterDetails(characterId: widget.characterId);
+        // await controller.getCharacterDetails(characterId: widget.characterId);
       },
     );
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.getCharacterDetails(characterId: widget.characterId);
     return Observer(builder: (context) {
       return Scaffold(
         // backgroundColor: controller.backgroundColor,
@@ -172,6 +174,7 @@ class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
                                               height: Adaptive.w(52),
                                               child: AnimeAppearanceWidget(
                                                 itemModel: controller.characterData.anime![index],
+                                                isManga: false,
                                               ),
                                             ),
                                           ),
@@ -197,6 +200,7 @@ class _CharacterDetailsScreensState extends State<CharacterDetailsScreens> {
                                               width: Adaptive.w(45),
                                               height: Adaptive.w(52),
                                               child: AnimeAppearanceWidget(
+                                                isManga: true,
                                                 itemModel: AnimeElement(role: controller.characterData.manga![index].role, anime: controller.characterData.manga![index].manga),
                                               ),
                                             ),

@@ -7,13 +7,16 @@ Future<String> returnSvgString({required String imageUrl}) async {
   return response.body;
 }
 
-Future<Uint8List> convertImageToPng(Uint8List imageBytes, {int? width, int? height}) async {
+Future<Uint8List> convertImageToPng(Uint8List imageBytes,
+    {int? width, int? height}) async {
   final image = img.decodeImage(imageBytes);
-  final resizedImage = img.copyResize(image!, width: width ?? 200, height: height ?? 200);
+  final resizedImage =
+      img.copyResize(image!, width: width ?? 200, height: height ?? 200);
   return Uint8List.fromList(img.encodePng(resizedImage));
 }
 
-Future<File> returnPngFile({required Uint8List imageBytes, required String imageType}) async {
+Future<File> returnPngFile(
+    {required Uint8List imageBytes, required String imageType}) async {
   final pngBytes = await convertImageToPng(
     imageBytes,
   );
@@ -22,13 +25,15 @@ Future<File> returnPngFile({required Uint8List imageBytes, required String image
   final directory = await getApplicationDocumentsDirectory();
 
   // Create a file in the documents directory.
-  final file = File('${directory.path}/image_${DateTime.now().millisecondsSinceEpoch}.png');
+  final file = File(
+      '${directory.path}/image_${DateTime.now().millisecondsSinceEpoch}.png');
 
   // Write the PNG bytes to the file and return it.
   return await file.writeAsBytes(pngBytes);
 }
 
-Future<Color> returnDominantColor({required String imageUrl, required VoidCallback callback}) async {
+Future<Color> returnDominantColor(
+    {required String imageUrl, required VoidCallback callback}) async {
   final response = await HttpClient().getUrl(Uri.parse(imageUrl));
   final responseBody = await response.close();
   final imageBytes = await consolidateHttpClientResponseBytes(responseBody);
@@ -41,14 +46,17 @@ Future<Color> returnDominantColor({required String imageUrl, required VoidCallba
     throw UnsupportedError('Unsupported image format');
   }
 
-  final file = await returnPngFile(imageBytes: imageBytes, imageType: imageType);
+  final file =
+      await returnPngFile(imageBytes: imageBytes, imageType: imageType);
 
   final paletteGenerator = await PaletteGenerator.fromImageProvider(
     FileImage(file),
   );
 
   callback();
-  return paletteGenerator.dominantColor != null ? paletteGenerator.dominantColor!.color : Colors.white;
+  return paletteGenerator.dominantColor != null
+      ? paletteGenerator.dominantColor!.color
+      : Colors.white;
 }
 
 /*----------------Widgets----------------*/
@@ -143,7 +151,10 @@ TextStyle hintStyle() => TextStyle(
 
 /*--------------Navigation Function---------------*/
 
-void goToScreen({required String routeName, String? data = '', required BuildContext context}) {
+void goToScreen(
+    {required String routeName,
+    String? data = '',
+    required BuildContext context}) {
   context.push(
     routeName + (data ?? ''),
   );
@@ -166,7 +177,8 @@ String convertToHtml({
     for (String line in lines) {
       if (line.contains(':')) {
         var parts = line.split(':');
-        html.write('<li><strong>${parts[0].trim()}:</strong> ${parts[1].trim()}</li><br>');
+        html.write(
+            '<li><strong>${parts[0].trim()}:</strong> ${parts[1].trim()}</li><br>');
       } else if (line.trim().isEmpty) {
         html.write('<br>');
       } else {
@@ -270,7 +282,8 @@ String generateBasicDetails(String section) {
   for (String line in lines) {
     if (line.contains(':')) {
       var parts = line.split(':');
-      html.write('<li><strong>${parts[0].trim()}:</strong> ${parts[1].trim()}</li><br>');
+      html.write(
+          '<li><strong>${parts[0].trim()}:</strong> ${parts[1].trim()}</li><br>');
     } else if (line.trim().isEmpty) {
       html.write('<br>');
     }

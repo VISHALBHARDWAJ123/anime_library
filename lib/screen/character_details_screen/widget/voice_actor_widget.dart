@@ -55,7 +55,8 @@ class _VoiceActorWidgetState extends State<VoiceActorWidget> {
             _,
             s,
           ) =>
-              ClipRRect(borderRadius: BorderRadius.circular(25), child: loadingBar()),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(25), child: loadingBar()),
         ),
       ],
     );

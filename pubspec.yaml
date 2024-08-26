@@ -59,6 +59,9 @@ dependencies:
   readmore: ^3.0.0
   path_provider: ^2.1.2
   flutter_staggered_grid_view: ^0.7.0
+  intl: ^0.19.0
+  flutter_rating_bar: ^4.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -116,4 +119,6 @@ flutter:
     - assets/
     - assets/header.png
     - assets/not_found.json
+    - assets/icons/
+    - assets/icons/rating/
 

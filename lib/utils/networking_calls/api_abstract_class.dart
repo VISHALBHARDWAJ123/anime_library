@@ -1,5 +1,6 @@
 import 'package:anime_library/utils/app_export.dart';
 import 'package:anime_library/utils/models/anime_details_model.dart';
+import 'package:anime_library/utils/models/anime_episodes_model.dart';
 
 abstract class ApiRepository {
   Future<AnimeDetailsModel> getAnimeInfo({required int animeId});
@@ -14,4 +15,8 @@ abstract class ApiRepository {
   Future getTopAnime();
   Future getTopManga();
   Future getTopCharacters();
+  Future<AnimeStaffModel> getAnimeStaff({required int animeId});
+  Future<AnimeEpisodesModel> getAnimeEpisodeList({required int animeId});
+  Future getAnimeStats();
+  Future getAnimeFeedbacks();
 }

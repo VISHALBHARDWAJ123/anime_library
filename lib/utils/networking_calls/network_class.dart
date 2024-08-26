@@ -1,5 +1,5 @@
 import 'package:anime_library/utils/app_export.dart';
-import 'package:anime_library/utils/models/anime_details_model.dart';
+import 'package:anime_library/utils/models/anime_episodes_model.dart';
 
 class ApiNetworkClass extends ApiRepository {
   @override
@@ -92,6 +92,40 @@ class ApiNetworkClass extends ApiRepository {
   @override
   Future getCharacterVoiceActors() {
     // TODO: implement getCharacterVoiceActors
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AnimeEpisodesModel> getAnimeEpisodeList({required int animeId, int? page = 1}) async {
+    // TODO: implement getAnimeEpisodeList
+    try {
+      final data = await HttpRequest.getRequest(endpointWithValues: '$ANIME_LIST_ENDPOINT/$animeId/episodes?page=$page');
+      return AnimeEpisodesModel.fromJson(data);
+    } catch (e) {
+      return AnimeEpisodesModel();
+    }
+  }
+
+  @override
+  Future getAnimeFeedbacks() {
+    // TODO: implement getAnimeFeedbacks
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AnimeStaffModel> getAnimeStaff({required int animeId}) async {
+    try {
+      final data = await HttpRequest.getRequest(endpointWithValues: '$ANIME_LIST_ENDPOINT/$animeId/staff');
+      print(data.toString());
+      return AnimeStaffModel.fromJson(data);
+    } catch (e, stk) {
+      return AnimeStaffModel();
+    }
+  }
+
+  @override
+  Future getAnimeStats() {
+    // TODO: implement getAnimeStats
     throw UnimplementedError();
   }
 }

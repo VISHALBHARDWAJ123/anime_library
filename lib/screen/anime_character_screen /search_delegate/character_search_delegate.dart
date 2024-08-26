@@ -34,10 +34,6 @@ class CharacterSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    List<String> suggestions = popularAnimeCharacters.where((name) {
-      return name.toLowerCase().contains(query.toLowerCase());
-    }).toList();
-
     return Observer(
       builder: (context) {
         return controller.searchLoading

@@ -20,15 +20,19 @@ abstract class MainScreenController with Store {
   @observable
   bool stopLoading = false;
   @observable
-  ObservableList<AnimeListItemModel> animeList = ObservableList<AnimeListItemModel>();
+  ObservableList<AnimeListItemModel> animeList =
+      ObservableList<AnimeListItemModel>();
   @observable
   AnimeListModel initialAnimeList = AnimeListModel();
 
   @action
-  Future<void> fetchInitialAnimeList({bool? refresh = true, int? limit = 24}) async {
+  Future<void> fetchInitialAnimeList(
+      {bool? refresh = true, int? limit = 24}) async {
     loading = !refresh!;
     try {
-      await _apiClassInstance.getAnimeList(currentPage: 1, limit: limit).then((data) {
+      await _apiClassInstance
+          .getAnimeList(currentPage: 1, limit: limit)
+          .then((data) {
         initialAnimeList = data;
         animeList.clear();
         animeList.addAll(initialAnimeList.data ?? []);
@@ -53,7 +57,9 @@ abstract class MainScreenController with Store {
     stopLoading = true;
     try {
       paginationData.hasNextPage!
-          ? await _apiClassInstance.getAnimeList(currentPage: tempLastPage + 1, limit: 24).then((data) {
+          ? await _apiClassInstance
+              .getAnimeList(currentPage: tempLastPage + 1, limit: 24)
+              .then((data) {
               initialAnimeList = data;
               animeList.addAll(initialAnimeList.data ?? []);
               if (kDebugMode) {

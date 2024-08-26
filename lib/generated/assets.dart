@@ -5,8 +5,19 @@ class Assets {
   static const String animeLibraryAssetsHeader = 'assets/header.png';
   static const String animeLibraryAssetsNotFound = 'assets/not_found.json';
   static const String assetsBackground1 = 'assets/background1.jpg';
+  static const String assetsBackground2 = 'assets/background2.jpg';
+  static const String assetsBackground3 = 'assets/background3.jpg';
   static const String assetsHeader = 'assets/header.png';
   static const String assetsLoading = 'assets/loading.json';
   static const String assetsMylogo = 'assets/mylogo.png';
   static const String assetsNotFound = 'assets/not_found.json';
+  static const String iconsDetails = 'assets/icons/details.png';
+  static const String iconsReviews = 'assets/icons/reviews.png';
+  static const String iconsStats = 'assets/icons/stats.png';
+  static const String iconsTeam = 'assets/icons/team.png';
+  static const String iconsTv = 'assets/icons/tv.png';
+  static const String iconsVideo = 'assets/icons/video.png';
+  static const String ratingStar = 'assets/icons/rating/star.png';
+  static const String ratingStar2 = 'assets/icons/rating/star_2.png';
+  static const String ratingStar3 = 'assets/icons/rating/star_3.png';
 }

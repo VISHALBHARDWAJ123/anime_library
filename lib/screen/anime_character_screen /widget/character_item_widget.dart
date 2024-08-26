@@ -9,7 +9,8 @@ class AnimeCharacterItemWidget extends StatefulWidget {
   });
 
   @override
-  State<AnimeCharacterItemWidget> createState() => _AnimeCharacterItemWidgetState();
+  State<AnimeCharacterItemWidget> createState() =>
+      _AnimeCharacterItemWidgetState();
 }
 
 class _AnimeCharacterItemWidgetState extends State<AnimeCharacterItemWidget> {
@@ -55,7 +56,8 @@ class _AnimeCharacterItemWidgetState extends State<AnimeCharacterItemWidget> {
             _,
             s,
           ) =>
-              ClipRRect(borderRadius: BorderRadius.circular(25), child: loadingBar()),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(25), child: loadingBar()),
         ),
       ],
     );

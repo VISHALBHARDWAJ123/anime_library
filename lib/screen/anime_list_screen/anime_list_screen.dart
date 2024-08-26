@@ -23,7 +23,10 @@ class _AmineListScreenState extends State<AmineListScreen> {
   }
 
   void _scrollListener() {
-    if (!controller.stopLoading && _scrollController.position.pixels >= _scrollController.position.maxScrollExtent * _boundaryOffset && !controller.paging) {
+    if (!controller.stopLoading &&
+        _scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent * _boundaryOffset &&
+        !controller.paging) {
       controller.paginationOfAnimeList();
     }
   }
@@ -44,7 +47,9 @@ class _AmineListScreenState extends State<AmineListScreen> {
                 pinned: true,
                 floating: false,
                 leading: InkWell(
-                  onTap: () => _key.currentState!.isDrawerOpen ? _key.currentState!.closeSlider() : _key.currentState!.openSlider(),
+                  onTap: () => _key.currentState!.isDrawerOpen
+                      ? _key.currentState!.closeSlider()
+                      : _key.currentState!.openSlider(),
                   child: Image.asset(
                     'assets/mylogo.png',
                     height: Adaptive.h(7),
@@ -53,7 +58,8 @@ class _AmineListScreenState extends State<AmineListScreen> {
               ),
               SliverToBoxAdapter(
                 child: CustomMaterialIndicator(
-                  onRefresh: () => controller.fetchInitialAnimeList(refresh: true),
+                  onRefresh: () =>
+                      controller.fetchInitialAnimeList(refresh: true),
                   indicatorBuilder: (context, controller) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(25),
@@ -82,7 +88,8 @@ class _AmineListScreenState extends State<AmineListScreen> {
                                   itemBuilder: (_, index) => AnimeItemWidget(
                                     itemModel: controller.animeList[index],
                                   ),
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     childAspectRatio: 1 / 1.2,
                                   ),

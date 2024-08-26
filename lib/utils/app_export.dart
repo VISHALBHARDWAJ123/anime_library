@@ -55,3 +55,14 @@ export 'package:anime_library/screen/anime_character_screen%20/widget/character_
 export 'package:anime_library/screen/anime_character_screen%20/controller/character_list_controller.dart';
 export 'package:anime_library/utils/models/character_details_model.dart';
 export 'package:anime_library/screen/anime_list_screen/anime_list_screen.dart';
+export 'package:anime_library/utils/browser/custom_in_app_browser.dart';
+export 'package:anime_library/screen/anime_details_screen/controller/anime_details_controller.dart';
+export 'package:anime_library/generated/assets.dart';
+export 'package:anime_library/utils/extensions/string_extension.dart';
+export 'package:anime_library/utils/models/anime_details_model.dart';
+export 'package:anime_library/utils/models/anime_staff_model.dart';
+export 'package:anime_library/utils/models/anime_episodes_model.dart';
+export 'package:anime_library/utils/extensions/date_time_extension.dart';
+
+export 'package:anime_library/screen/anime_details_screen/widget/custom_bottom_navigation.dart';
+export 'package:anime_library/screen/anime_details_screen/widget/staff_view_widget.dart';

@@ -7,3 +7,4 @@ const animeCharacterDetailsPageRoute = '/animeCharacterDetails';
 const upcomingSeasonsPageRoute = '/newSeasons';
 const animeCharactersPageRoute = '/animeCharacter';
 const settingPageRoute = '/settings';
+const browserPageRoute = '/browser';
