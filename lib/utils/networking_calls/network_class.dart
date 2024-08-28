@@ -107,12 +107,6 @@ class ApiNetworkClass extends ApiRepository {
   }
 
   @override
-  Future getAnimeFeedbacks() {
-    // TODO: implement getAnimeFeedbacks
-    throw UnimplementedError();
-  }
-
-  @override
   Future<AnimeStaffModel> getAnimeStaff({required int animeId}) async {
     try {
       final data = await HttpRequest.getRequest(endpointWithValues: '$ANIME_LIST_ENDPOINT/$animeId/staff');
@@ -124,8 +118,23 @@ class ApiNetworkClass extends ApiRepository {
   }
 
   @override
-  Future getAnimeStats() {
-    // TODO: implement getAnimeStats
-    throw UnimplementedError();
+  Future<AnimeReviewsModel> getAnimeFeedbacks({required int animeId, int? page = 1}) async {
+    try {
+      final data = await HttpRequest.getRequest(endpointWithValues: '$ANIME_LIST_ENDPOINT/$animeId/reviews?page=$page');
+      return AnimeReviewsModel.fromJson(data);
+    } catch (e) {
+      return AnimeReviewsModel();
+    }
+  }
+
+  @override
+  Future<AnimeStatsModel> getAnimeStats({required int animeId}) async {
+    try {
+      final data = await HttpRequest.getRequest(endpointWithValues: '$ANIME_LIST_ENDPOINT/$animeId/statistics');
+      print(data.toString());
+      return AnimeStatsModel.fromJson(data);
+    } catch (e, stk) {
+      return AnimeStatsModel();
+    }
   }
 }

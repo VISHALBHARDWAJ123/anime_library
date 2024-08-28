@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:io';
+import 'package:anime_library/utils/app_export.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
   final GlobalKey webViewKey = GlobalKey();
 
   late final WebViewController _controller;
+  bool loading = false;
 
   @override
   void initState() {
@@ -37,14 +39,20 @@ class _BrowserScreenState extends State<BrowserScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            debugPrint('WebView is loading (progress : $progress%)');
-          },
+          onProgress: (int progress) {},
           onPageStarted: (String url) {
-            debugPrint('Page started loading: $url');
+            if (mounted) {
+              setState(() {
+                loading = true;
+              });
+            }
           },
           onPageFinished: (String url) {
-            debugPrint('Page finished loading: $url');
+            if (mounted) {
+              setState(() {
+                loading = false;
+              });
+            }
           },
           onWebResourceError: (WebResourceError error) {
             debugPrint('''
@@ -57,18 +65,13 @@ class _BrowserScreenState extends State<BrowserScreen> {
           },
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
-              debugPrint('blocking navigation to ${request.url}');
               return NavigationDecision.prevent;
             }
-            debugPrint('allowing navigation to ${request.url}');
+
             return NavigationDecision.navigate;
           },
-          onHttpError: (HttpResponseError error) {
-            debugPrint('Error occurred on page: ${error.response?.statusCode}');
-          },
-          onUrlChange: (UrlChange change) {
-            debugPrint('url change to ${change.url}');
-          },
+          onHttpError: (HttpResponseError error) {},
+          onUrlChange: (UrlChange change) {},
           onHttpAuthRequest: (HttpAuthRequest request) {},
         ),
       )
@@ -86,8 +89,6 @@ class _BrowserScreenState extends State<BrowserScreen> {
       controller.setBackgroundColor(const Color(0x80000000));
     }
 
-    // #enddocregion platform_features
-
     _controller = controller;
   }
 
@@ -99,7 +100,12 @@ class _BrowserScreenState extends State<BrowserScreen> {
         title: Text(widget.title),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
       ),
-      body: WebViewWidget(controller: _controller),
+      body: Stack(
+        children: [
+          WebViewWidget(controller: _controller),
+          if (loading) Center(child: loadingBar()),
+        ],
+      ),
     );
   }
 }

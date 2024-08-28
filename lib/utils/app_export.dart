@@ -63,6 +63,11 @@ export 'package:anime_library/utils/models/anime_details_model.dart';
 export 'package:anime_library/utils/models/anime_staff_model.dart';
 export 'package:anime_library/utils/models/anime_episodes_model.dart';
 export 'package:anime_library/utils/extensions/date_time_extension.dart';
-
+export 'package:anime_library/utils/models/anime_stats_model.dart';
 export 'package:anime_library/screen/anime_details_screen/widget/custom_bottom_navigation.dart';
 export 'package:anime_library/screen/anime_details_screen/widget/staff_view_widget.dart';
+export 'package:anime_library/utils/models/anime_reviews_model.dart';
+export 'package:d_chart/commons/data_model.dart';
+export 'package:fl_chart/fl_chart.dart';
+export 'package:flutter_rating_bar/flutter_rating_bar.dart';
+export 'package:d_chart/ordinal/bar.dart';

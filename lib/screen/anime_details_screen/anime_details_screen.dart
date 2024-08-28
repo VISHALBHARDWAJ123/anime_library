@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:anime_library/screen/anime_details_screen/widget/custom_chart.dart';
 import 'package:anime_library/utils/app_export.dart';
+import 'package:anime_library/utils/models/anime_reviews_model.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class AnimeDetailsScreen extends StatefulWidget {
   const AnimeDetailsScreen({super.key, required this.image, required this.animeId});
@@ -21,6 +24,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
   int _activeIndex = 0;
 
   final _scrollController = ScrollController();
+  final _reviewScrollController = ScrollController();
 
   void _scrollListener() {
     if (!controller.episodeLoading && _scrollController.position.pixels >= _scrollController.position.maxScrollExtent * _boundaryOffset && !controller.paging) {
@@ -31,6 +35,19 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
       setState(() {
         _activeIndex = 0;
         _activeIndex = 2;
+      });
+    }
+  }
+
+  void _reviewScrollListener() {
+    if (!controller.reviewLoading && _reviewScrollController.position.pixels >= _reviewScrollController.position.maxScrollExtent * _boundaryOffset && !controller.paging) {
+      controller.paginationOfReviews(animeId: controller.animeDetails.data!.malId!).whenComplete(() => setState(() {
+            _activeIndex = 0;
+            _activeIndex = 4;
+          }));
+      setState(() {
+        _activeIndex = 0;
+        _activeIndex = 4;
       });
     }
   }
@@ -111,23 +128,6 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              /*                         RichText(
-                                              text: TextSpan(
-                                                  text: 'Aired: ',
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.blue,
-                                                  ),
-                                                  children: [
-                                                TextSpan(
-                                                  text: DateTime.tryParse(controller.animeEpisodesModel.data![index].aired!)!.formatDate ?? '',
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.normal,
-                                                  ),
-                                                ),
-                                              ])),*/
-                                              /*AutoSizeText('Aired: ${DateTime.tryParse(controller.animeEpisodesModel.data![index].aired!)!.formatDate ?? ''}'),*/
                                               AutoSizeText('Filler: ${controller.animeEpisodesModel.data![index].filler}'),
                                               RatingBar(
                                                   itemSize: 10,
@@ -135,7 +135,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                                                   itemPadding: const EdgeInsets.symmetric(
                                                     horizontal: 2,
                                                   ),
-                                                  initialRating: controller.animeEpisodesModel.data![index].score!,
+                                                  initialRating: controller.animeEpisodesModel.data![index].score ?? 0,
                                                   ratingWidget: RatingWidget(
                                                     full: Image.asset(
                                                       Assets.ratingStar,
@@ -181,7 +181,237 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                       );
       });
 
+  Widget _reviewItems({required Color backgroundColor}) => Observer(builder: (context) {
+        return controller.reviewsLoad
+            ? Center(
+                child: loadingBar(),
+              )
+            : controller.reviewsError
+                ? const Center(
+                    child: Text('Something went wrong'),
+                  )
+                : (controller.animeReviewsModel.data ?? []).isEmpty
+                    ? const Center(
+                        child: AutoSizeText('No Review Available.'),
+                      )
+                    : FutureBuilder(
+                        builder: (context, snap) {
+                          return Stack(
+                            children: [
+                              Scrollbar(
+                                controller: _reviewScrollController,
+                                child: ListView.builder(
+                                  controller: _reviewScrollController,
+                                  itemCount: (controller.animeReviewsModel.data ?? []).length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return _reviewItem(
+                                      data: (controller.animeReviewsModel.data ?? [])[index],
+                                      backgroundColor: backgroundColor,
+                                    );
+                                  },
+                                ),
+                              ),
+                              if (controller.paging == true)
+                                const Align(
+                                  alignment: Alignment.topCenter,
+                                  child: SpinKitWave(
+                                    color: Colors.purple,
+                                    type: SpinKitWaveType.start,
+                                  ),
+                                )
+                            ],
+                          );
+                        },
+                        future: Future.delayed(Duration.zero),
+                      );
+      });
+
+  Widget _statsItems() => Observer(builder: (context) {
+        return controller.statsLoad == true
+            ? Center(
+                child: loadingBar(),
+              )
+            : controller.statsError
+                ? const Center(
+                    child: Text('Something went wrong'),
+                  )
+                : FutureBuilder(
+                    builder: (context, snap) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: SizedBox(
+                          width: 100.w,
+                          child: Stack(
+                            children: [
+                              SingleChildScrollView(
+                                controller: ScrollController(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    verticalSpace(spaceValue: 3),
+                                    const HtmlWidget(
+                                      '''<h2>Summary Stats </h2>''',
+                                      buildAsync: false,
+                                    ),
+                                    const Divider(
+                                      color: Colors.white,
+                                    ),
+                                    verticalSpace(spaceValue: .5),
+                                    HtmlWidget(
+                                      '''<b>Watching: </b> ${controller.animeStatsModel.data!.watching}<br><br>''',
+                                      buildAsync: false,
+                                    ),
+                                    HtmlWidget(
+                                      '''<b>Completed: </b> ${controller.animeStatsModel.data!.completed}<br><br>''',
+                                      buildAsync: false,
+                                    ),
+                                    HtmlWidget(
+                                      '''<b>On-Hold: </b> ${controller.animeStatsModel.data!.onHold}<br><br>''',
+                                      buildAsync: false,
+                                    ),
+                                    HtmlWidget(
+                                      '''<b>Dropped: </b> ${controller.animeStatsModel.data!.dropped}<br><br>''',
+                                      buildAsync: false,
+                                    ),
+                                    HtmlWidget(
+                                      '''<b>Plan to watch: </b> ${controller.animeStatsModel.data!.planToWatch}<br><br>''',
+                                      buildAsync: false,
+                                    ),
+                                    HtmlWidget(
+                                      '''<b>Total: </b> ${controller.animeStatsModel.data!.total}''',
+                                      buildAsync: false,
+                                    ),
+                                    verticalSpace(spaceValue: 3),
+                                    const HtmlWidget(
+                                      '''<h2>Score Stats </h2>''',
+                                      buildAsync: false,
+                                    ),
+                                    const Divider(
+                                      color: Colors.white,
+                                    ),
+                                    verticalSpace(spaceValue: .5),
+                                    BarChartSample1(
+                                      data: controller.animeStatsModel.data!.scores!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    future: Future.delayed(Duration.zero),
+                  );
+      });
+
   Widget get _staffView => _staffItems();
+
+  Widget _reviewItem({required ReviewItemModel data, required Color backgroundColor}) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Container(
+          width: 100.w,
+          height: 34.w,
+          decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(8)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              /*     */ /*      mainAxisAlignment: MainAxisAlignment.start,*/ /*
+              crossAxisAlignment: CrossAxisAlignment.start,*/
+              children: [
+                Center(
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: CachedNetworkImageProvider(
+                      data.user!.images!['jpg']!.imageUrl!,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 1.w,
+                      right: 1.w,
+                      top: 1.2,
+                      bottom: 1.w,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                          child: AutoSizeText(
+                            data.user!.username!,
+                            style: GoogleFonts.workSans(
+                              textStyle: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.black,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        AutoSizeText(
+                          data.review!,
+                          style: GoogleFonts.workSans(
+                            textStyle: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.black,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.star,
+                              color: Colors.black,
+                            ),
+                            Text(
+                              (data.score ?? 0).toString(),
+                              style: GoogleFonts.workSans(
+                                textStyle: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const Spacer(),
+                            Row(
+                              children: [
+                                const Icon(Icons.thumb_up, size: 12),
+                                const SizedBox(width: 4),
+                                Text('${data.reactions!.overall}'),
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
 
   @override
   void initState() {
@@ -193,6 +423,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
           await controller.getAnimeDetails(animeId: widget.animeId);
         });
     _scrollController.addListener(_scrollListener);
+    _reviewScrollController.addListener(_reviewScrollListener);
     super.initState();
   }
 
@@ -225,6 +456,16 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                                 break;
                               case 2:
                                 controller.getAnimeEpisodes(
+                                  animeId: controller.animeDetails.data!.malId!,
+                                );
+                                break;
+                              case 3:
+                                controller.getAnimeStats(
+                                  animeId: controller.animeDetails.data!.malId!,
+                                );
+                                break;
+                              case 4:
+                                controller.getAnimeReviews(
                                   animeId: controller.animeDetails.data!.malId!,
                                 );
                                 break;
@@ -295,7 +536,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                                 Expanded(
                                     child: AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 1000),
-                                  child: _returnWidget(),
+                                  child: _returnWidget(backgroundColor: snapshot.data ?? Colors.blue),
                                 )),
                               if (!controller.loading)
                                 Center(
@@ -792,12 +1033,16 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
     return producers.join(', ');
   }
 
-  Widget _returnWidget() {
+  Widget _returnWidget({required Color backgroundColor}) {
     return _activeIndex == 0
         ? _detailsView
         : _activeIndex == 1
             ? _staffView
-            : _episodeItems();
+            : _activeIndex == 2
+                ? _episodeItems()
+                : _activeIndex == 3
+                    ? _statsItems()
+                    : _reviewItems(backgroundColor: backgroundColor);
   }
 
   int _episodeItemsLength() {

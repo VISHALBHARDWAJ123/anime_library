@@ -29,6 +29,20 @@ mixin _$AnimeDetailsController on AnimeDetailsCnt, Store {
       (_$episodeLoadComputed ??= Computed<bool>(() => super.episodeLoad,
               name: 'AnimeDetailsCnt.episodeLoad'))
           .value;
+  Computed<bool>? _$statsLoadComputed;
+
+  @override
+  bool get statsLoad =>
+      (_$statsLoadComputed ??= Computed<bool>(() => super.statsLoad,
+              name: 'AnimeDetailsCnt.statsLoad'))
+          .value;
+  Computed<bool>? _$reviewsLoadComputed;
+
+  @override
+  bool get reviewsLoad =>
+      (_$reviewsLoadComputed ??= Computed<bool>(() => super.reviewsLoad,
+              name: 'AnimeDetailsCnt.reviewsLoad'))
+          .value;
   Computed<bool>? _$dataLoadedComputed;
 
   @override
@@ -133,6 +147,38 @@ mixin _$AnimeDetailsController on AnimeDetailsCnt, Store {
     });
   }
 
+  late final _$statsLoadingAtom =
+      Atom(name: 'AnimeDetailsCnt.statsLoading', context: context);
+
+  @override
+  bool get statsLoading {
+    _$statsLoadingAtom.reportRead();
+    return super.statsLoading;
+  }
+
+  @override
+  set statsLoading(bool value) {
+    _$statsLoadingAtom.reportWrite(value, super.statsLoading, () {
+      super.statsLoading = value;
+    });
+  }
+
+  late final _$reviewLoadingAtom =
+      Atom(name: 'AnimeDetailsCnt.reviewLoading', context: context);
+
+  @override
+  bool get reviewLoading {
+    _$reviewLoadingAtom.reportRead();
+    return super.reviewLoading;
+  }
+
+  @override
+  set reviewLoading(bool value) {
+    _$reviewLoadingAtom.reportWrite(value, super.reviewLoading, () {
+      super.reviewLoading = value;
+    });
+  }
+
   late final _$isDataLoadedAtom =
       Atom(name: 'AnimeDetailsCnt.isDataLoaded', context: context);
 
@@ -194,6 +240,38 @@ mixin _$AnimeDetailsController on AnimeDetailsCnt, Store {
   set episodeError(bool value) {
     _$episodeErrorAtom.reportWrite(value, super.episodeError, () {
       super.episodeError = value;
+    });
+  }
+
+  late final _$statsErrorAtom =
+      Atom(name: 'AnimeDetailsCnt.statsError', context: context);
+
+  @override
+  bool get statsError {
+    _$statsErrorAtom.reportRead();
+    return super.statsError;
+  }
+
+  @override
+  set statsError(bool value) {
+    _$statsErrorAtom.reportWrite(value, super.statsError, () {
+      super.statsError = value;
+    });
+  }
+
+  late final _$reviewsErrorAtom =
+      Atom(name: 'AnimeDetailsCnt.reviewsError', context: context);
+
+  @override
+  bool get reviewsError {
+    _$reviewsErrorAtom.reportRead();
+    return super.reviewsError;
+  }
+
+  @override
+  set reviewsError(bool value) {
+    _$reviewsErrorAtom.reportWrite(value, super.reviewsError, () {
+      super.reviewsError = value;
     });
   }
 
@@ -261,6 +339,38 @@ mixin _$AnimeDetailsController on AnimeDetailsCnt, Store {
     });
   }
 
+  late final _$animeStatsModelAtom =
+      Atom(name: 'AnimeDetailsCnt.animeStatsModel', context: context);
+
+  @override
+  AnimeStatsModel get animeStatsModel {
+    _$animeStatsModelAtom.reportRead();
+    return super.animeStatsModel;
+  }
+
+  @override
+  set animeStatsModel(AnimeStatsModel value) {
+    _$animeStatsModelAtom.reportWrite(value, super.animeStatsModel, () {
+      super.animeStatsModel = value;
+    });
+  }
+
+  late final _$animeReviewsModelAtom =
+      Atom(name: 'AnimeDetailsCnt.animeReviewsModel', context: context);
+
+  @override
+  AnimeReviewsModel get animeReviewsModel {
+    _$animeReviewsModelAtom.reportRead();
+    return super.animeReviewsModel;
+  }
+
+  @override
+  set animeReviewsModel(AnimeReviewsModel value) {
+    _$animeReviewsModelAtom.reportWrite(value, super.animeReviewsModel, () {
+      super.animeReviewsModel = value;
+    });
+  }
+
   late final _$getAnimeDetailsAsyncAction =
       AsyncAction('AnimeDetailsCnt.getAnimeDetails', context: context);
 
@@ -301,16 +411,27 @@ mixin _$AnimeDetailsController on AnimeDetailsCnt, Store {
       AsyncAction('AnimeDetailsCnt.getAnimeStats', context: context);
 
   @override
-  Future<void> getAnimeStats() {
-    return _$getAnimeStatsAsyncAction.run(() => super.getAnimeStats());
+  Future<void> getAnimeStats({required int animeId}) {
+    return _$getAnimeStatsAsyncAction
+        .run(() => super.getAnimeStats(animeId: animeId));
   }
 
   late final _$getAnimeReviewsAsyncAction =
       AsyncAction('AnimeDetailsCnt.getAnimeReviews', context: context);
 
   @override
-  Future<void> getAnimeReviews() {
-    return _$getAnimeReviewsAsyncAction.run(() => super.getAnimeReviews());
+  Future<void> getAnimeReviews({required int animeId}) {
+    return _$getAnimeReviewsAsyncAction
+        .run(() => super.getAnimeReviews(animeId: animeId));
+  }
+
+  late final _$paginationOfReviewsAsyncAction =
+      AsyncAction('AnimeDetailsCnt.paginationOfReviews', context: context);
+
+  @override
+  Future<void> paginationOfReviews({required int animeId}) {
+    return _$paginationOfReviewsAsyncAction
+        .run(() => super.paginationOfReviews(animeId: animeId));
   }
 
   @override
@@ -322,17 +443,25 @@ stopLoading: ${stopLoading},
 loading: ${loading},
 staffLoading: ${staffLoading},
 episodeLoading: ${episodeLoading},
+statsLoading: ${statsLoading},
+reviewLoading: ${reviewLoading},
 isDataLoaded: ${isDataLoaded},
 error: ${error},
 staffError: ${staffError},
 episodeError: ${episodeError},
+statsError: ${statsError},
+reviewsError: ${reviewsError},
 errorMessage: ${errorMessage},
 animeDetails: ${animeDetails},
 animeStaffModel: ${animeStaffModel},
 animeEpisodesModel: ${animeEpisodesModel},
+animeStatsModel: ${animeStatsModel},
+animeReviewsModel: ${animeReviewsModel},
 load: ${load},
 staffLoad: ${staffLoad},
 episodeLoad: ${episodeLoad},
+statsLoad: ${statsLoad},
+reviewsLoad: ${reviewsLoad},
 dataLoaded: ${dataLoaded}
     ''';
   }

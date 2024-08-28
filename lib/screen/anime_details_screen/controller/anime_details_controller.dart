@@ -22,6 +22,10 @@ abstract class AnimeDetailsCnt with Store {
   @observable
   bool episodeLoading = true;
   @observable
+  bool statsLoading = true;
+  @observable
+  bool reviewLoading = true;
+  @observable
   bool isDataLoaded = false;
   @observable
   bool error = false;
@@ -30,6 +34,10 @@ abstract class AnimeDetailsCnt with Store {
   @observable
   bool episodeError = false;
   @observable
+  bool statsError = false;
+  @observable
+  bool reviewsError = false;
+  @observable
   String errorMessage = 'Something went wrong!';
   @observable
   AnimeDetailsModel animeDetails = AnimeDetailsModel();
@@ -37,6 +45,10 @@ abstract class AnimeDetailsCnt with Store {
   AnimeStaffModel animeStaffModel = AnimeStaffModel();
   @observable
   AnimeEpisodesModel animeEpisodesModel = AnimeEpisodesModel();
+  @observable
+  AnimeStatsModel animeStatsModel = AnimeStatsModel();
+  @observable
+  AnimeReviewsModel animeReviewsModel = AnimeReviewsModel();
 
   @computed
   bool get load => loading;
@@ -46,6 +58,12 @@ abstract class AnimeDetailsCnt with Store {
 
   @computed
   bool get episodeLoad => episodeLoading;
+
+  @computed
+  bool get statsLoad => statsLoading;
+
+  @computed
+  bool get reviewsLoad => reviewLoading;
 
   @computed
   bool get dataLoaded => isDataLoaded;
@@ -113,8 +131,49 @@ abstract class AnimeDetailsCnt with Store {
   }
 
   @action
-  Future<void> getAnimeStats() async {}
+  Future<void> getAnimeStats({required int animeId}) async {
+    statsLoading = true;
+    try {
+      final data = animeStatsModel.data != null ? animeStatsModel : await apiController.getAnimeStats(animeId: animeId);
+      animeStatsModel = data;
+    } catch (e) {
+      statsError = true;
+    }
+    statsLoading = false;
+  }
 
   @action
-  Future<void> getAnimeReviews() async {}
+  Future<void> getAnimeReviews({required int animeId}) async {
+    reviewLoading = true;
+    try {
+      final data = animeReviewsModel.data != null ? animeReviewsModel : await apiController.getAnimeFeedbacks(animeId: animeId);
+      animeReviewsModel = data;
+    } catch (e) {
+      reviewsError = true;
+    }
+    reviewLoading = false;
+  }
+
+  @action
+  Future<void> paginationOfReviews({required int animeId}) async {
+    print(animeReviewsModel.pagination!.hasNextPage!);
+    if (animeReviewsModel.pagination!.hasNextPage!) {
+      _page = _page + 1;
+    }
+    paging = true;
+    stopLoading = true;
+    try {
+      animeReviewsModel.pagination!.hasNextPage!
+          ? await apiController.getAnimeFeedbacks(animeId: animeId, page: _page).then((data) {
+              animeReviewsModel.data!.addAll(data.data ?? []);
+
+              animeReviewsModel.pagination = data.pagination ?? EpisodePagination();
+            })
+          : null;
+    } catch (e, stack) {
+      paging = false;
+    }
+    paging = false;
+    stopLoading = false;
+  }
 }
