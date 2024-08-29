@@ -1,5 +1,3 @@
-import 'package:anime_library/sample_text_widget.dart';
-import 'package:anime_library/screen/anime_details_screen/anime_details_screen.dart';
 import 'package:anime_library/utils/app_export.dart';
 
 class AppRoutes {
@@ -59,7 +57,7 @@ class AppRoutes {
       );
     },
   );
-  static final homeRoute = GoRoute(
+  static final animeListRoute = GoRoute(
     path: settingPageRoute,
     builder: (context, state) {
       return const AmineListScreen();
@@ -93,6 +91,12 @@ class AppRoutes {
         webUrl: webUrl,
         title: title,
       );
+    },
+  );
+  static final homeRoute = GoRoute(
+    path: homePageRoute,
+    builder: (context, state) {
+      return const HomeScreen();
     },
   );
 }

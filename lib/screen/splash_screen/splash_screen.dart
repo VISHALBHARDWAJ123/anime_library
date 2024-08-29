@@ -12,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     Future.delayed(const Duration(seconds: 3)).then(
-      (value) => context.go(animeListPageRoute),
+      (value) => context.go(homePageRoute),
     );
     super.initState();
   }

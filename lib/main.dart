@@ -3,6 +3,10 @@ import 'utils/app_export.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 
@@ -13,6 +17,7 @@ final _router = GoRouter(
   },
   routes: [
     AppRoutes.splashRoute,
+    AppRoutes.homeRoute,
     AppRoutes.animeListScreenRoute,
     AppRoutes.newsRoute,
     AppRoutes.animeCharactersRoute,
@@ -31,6 +36,7 @@ class MyApp extends StatelessWidget {
     return FlutterSizer(builder: (context, ori, screenTye) {
       return MaterialApp.router(
         key: navigatorKey,
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

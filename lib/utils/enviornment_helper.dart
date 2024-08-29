@@ -6,5 +6,5 @@ class EnviornmentHelper {
 /*  static String returnApiKey() => const String.fromEnvironment(apiKey);
 
   static String returnApiSecreteKey() => const String.fromEnvironment(apiSecreteKey);*/
-  static String returnApiSchema() => const String.fromEnvironment(apiSchema);
+  static String returnApiSchema() => 'https://api.jikan.moe/v4/';
 }

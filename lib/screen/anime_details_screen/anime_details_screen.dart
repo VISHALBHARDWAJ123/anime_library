@@ -1,12 +1,5 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:anime_library/screen/anime_details_screen/widget/custom_chart.dart';
 import 'package:anime_library/utils/app_export.dart';
-import 'package:anime_library/utils/models/anime_reviews_model.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class AnimeDetailsScreen extends StatefulWidget {
   const AnimeDetailsScreen({super.key, required this.image, required this.animeId});

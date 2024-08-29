@@ -1,5 +1,4 @@
 import 'package:anime_library/utils/app_export.dart';
-import 'package:anime_library/utils/models/anime_episodes_model.dart';
 
 class ApiNetworkClass extends ApiRepository {
   @override
@@ -60,9 +59,14 @@ class ApiNetworkClass extends ApiRepository {
   }
 
   @override
-  Future getTopAnime() {
-    // TODO: implement getTopAnime
-    throw UnimplementedError();
+  Future<AnimeListModel> getTopAnime() async {
+    try {
+      final data = await HttpRequest.getRequest(endpointWithValues: TOP_ANIME_LIST_ENDPOINT);
+      return AnimeListModel.fromJson(data);
+    } catch (e, stack) {
+      print(e.toString());
+      return AnimeListModel();
+    }
   }
 
   @override
@@ -74,12 +78,6 @@ class ApiNetworkClass extends ApiRepository {
   @override
   Future getTopManga() {
     // TODO: implement getTopManga
-    throw UnimplementedError();
-  }
-
-  @override
-  Future getUpcomingAnimeSeasons() {
-    // TODO: implement getUpcomingAnimeSeasons
     throw UnimplementedError();
   }
 
@@ -135,6 +133,17 @@ class ApiNetworkClass extends ApiRepository {
       return AnimeStatsModel.fromJson(data);
     } catch (e, stk) {
       return AnimeStatsModel();
+    }
+  }
+
+  @override
+  Future<AnimeListModel> getUpcomingAnimeSeasons({int? page = 1, int? limit = 6}) async {
+    try {
+      final data = await HttpRequest.getRequest(endpointWithValues: '$UPCOMING_ANIME_SEASONS$limit&page=$page');
+      return AnimeListModel.fromJson(data);
+    } catch (e, stack) {
+      print(e.toString());
+      return AnimeListModel();
     }
   }
 }

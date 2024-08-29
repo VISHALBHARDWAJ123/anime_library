@@ -1,18 +1,18 @@
 import 'package:anime_library/utils/app_export.dart';
 
-class AnimeItemWidget extends StatefulWidget {
+class SlideItem extends StatefulWidget {
   final AnimeListItemModel itemModel;
 
-  const AnimeItemWidget({
+  const SlideItem({
     super.key,
     required this.itemModel,
   });
 
   @override
-  State<AnimeItemWidget> createState() => _AnimeItemWidgetState();
+  State<SlideItem> createState() => _SlideItemState();
 }
 
-class _AnimeItemWidgetState extends State<AnimeItemWidget> {
+class _SlideItemState extends State<SlideItem> {
   @override
   void initState() {
     // TODO: implement initState
@@ -25,11 +25,11 @@ class _AnimeItemWidgetState extends State<AnimeItemWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => goToScreen(
+        /*      onTap: () => goToScreen(
           routeName: animeDetailsPageRoute,
           data: '?image=${widget.itemModel.images!['jpg']!.imageUrl}&animeId=${widget.itemModel.malId}',
           context: context,
-        ),
+        ),*/
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: Stack(
@@ -55,7 +55,7 @@ class _AnimeItemWidgetState extends State<AnimeItemWidget> {
       ),
       children: [
         CachedNetworkImage(
-          imageUrl: widget.itemModel.images!['jpg']!.largeImageUrl!,
+          imageUrl: widget.itemModel.images!['jpg']!.imageUrl!,
           key: backgroundKey,
           fit: BoxFit.cover,
           placeholder: (
@@ -93,7 +93,7 @@ class _AnimeItemWidgetState extends State<AnimeItemWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AutoSizeText(
-            widget.itemModel.titleEnglish ?? widget.itemModel.titleJapanese!,
+            '${widget.itemModel.titleEnglish}',
             maxLines: 2,
             style: const TextStyle(
               color: Colors.white,
@@ -101,15 +101,13 @@ class _AnimeItemWidgetState extends State<AnimeItemWidget> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          widget.itemModel.score != null
-              ? AutoSizeText(
-                  'Total score: ${widget.itemModel.score}/10',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                )
-              : const SizedBox(),
+          AutoSizeText(
+            '${widget.itemModel.score}/10',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
+          ),
         ],
       ),
     );
